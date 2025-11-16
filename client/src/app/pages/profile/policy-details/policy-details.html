@@ -1,26 +1,98 @@
-<div class="policy-details-grid">
-  <!-- <div class="detail-item">
-    <label>Policy ID:</label>
-    <span>{{ policy?.policyId }}</span>
-  </div> -->
-  <div class="detail-item">
-    <label>Policy Tier:</label>
-    <span>{{ policy?.tier }}</span>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+  <!-- POLICY TIER -->
+  <div class="group bg-[#1F2937]/60 border border-white/10 rounded-xl p-4 shadow-md transform transition duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-xl hover:ring-1 hover:ring-[#2563EB]/25">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-[#2563EB]/10 text-[#2563EB]">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2l3 6 6 .5-4.5 3.8L19 20l-7-4-7 4 1.5-7.7L2 8.5 8 8 12 2z"
+                stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div>
+        <label class="text-[#F0F9FF]/60 text-sm">Policy Tier</label>
+        <div class="text-[#F0F9FF] font-semibold text-lg mt-1">
+          {{ policy?.tier }}
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="detail-item">
-    <label>Start Date:</label>
-    <span>{{ policy?.startDate }}</span>
+
+  <!-- START DATE -->
+  <div class="group bg-[#1F2937]/60 border border-white/10 rounded-xl p-4 shadow-md transform transition duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-xl hover:ring-1 hover:ring-[#3B82F6]/20">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-[#3B82F6]/10 text-[#3B82F6]">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+          <path d="M7 11h10M7 15h10M7 7h10M5 4h14v16H5z"
+                stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div>
+        <label class="text-[#F0F9FF]/60 text-sm">Start Date</label>
+        <div class="text-[#F0F9FF] font-semibold text-lg mt-1">
+          {{ policy?.startDate }}
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="detail-item">
-    <label>Premium:</label>
-    <span>{{ policy?.premium }}</span>
+
+  <!-- PREMIUM -->
+  <div class="group bg-[#1F2937]/60 border border-white/10 rounded-xl p-4 shadow-md transform transition duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-xl hover:ring-1 hover:ring-[#2563EB]/20">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-[#2563EB]/10 text-[#2563EB]">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+          <path d="M12 1v22M5 6h14M5 12h14M5 18h14"
+                stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div>
+        <label class="text-[#F0F9FF]/60 text-sm">Premium</label>
+        <div class="text-[#F0F9FF] font-semibold text-lg mt-1">
+          ₹{{ policy?.premium }}
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="detail-item">
-    <label>End Date:</label>
-    <span>{{ policy?.endDate }}</span>
+
+  <!-- END DATE -->
+  <div class="group bg-[#1F2937]/60 border border-white/10 rounded-xl p-4 shadow-md transform transition duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-xl hover:ring-1 hover:ring-[#3B82F6]/20">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-[#3B82F6]/10 text-[#3B82F6]">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+          <path d="M7 11h10M7 15h10M7 7h10M5 4h14v16H5z"
+                stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div>
+        <label class="text-[#F0F9FF]/60 text-sm">End Date</label>
+        <div class="text-[#F0F9FF] font-semibold text-lg mt-1">
+          {{ policy?.endDate }}
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="detail-item">
-    <label>Remaining Coverage:</label>
-    <span>{{ policy?.remainingCoverage }}</span>
+
+  <!-- REMAINING COVERAGE (NO PROGRESS BAR) -->
+  <div class="group col-span-1 sm:col-span-2 bg-[#1F2937]/60 border border-white/10 rounded-xl p-4 shadow-md transform transition duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-xl hover:ring-1 hover:ring-[#2563EB]/25">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-[#2563EB]/10 text-[#2563EB]">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+          <path d="M3 12h18M12 3v18"
+                stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div>
+        <label class="text-[#F0F9FF]/60 text-sm">Remaining Coverage</label>
+        <div class="text-[#F0F9FF] font-semibold text-lg mt-1">
+          ₹{{ policy?.remainingCoverage }}
+        </div>
+      </div>
+    </div>
   </div>
+
 </div>

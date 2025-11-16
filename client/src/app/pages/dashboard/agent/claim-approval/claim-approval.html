@@ -1,99 +1,138 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Claim Summary (Tailwind dark theme, no Bootstrap) -->
+<div class="w-full max-w-[1400px] mx-auto mt-4 px-4">
 
-<div class="container mt-4 p-4 rounded-lg shadow-lg bg-white">
-    <h3 class="mb-3">Claim Summary</h3>
-    <table class="table table-bordered table-hover table-striped align-middle">
-        <thead class="table-dark">
-            <tr>
-                <th>Open Date</th>
-                <th>Procedure Notes</th>
-                <th>Claim Type</th>
-                <th>Status</th>
-                <th>Attachments</th>
-                <th>Claim Amount</th>
-                <th>Select Action</th>
-                <th>Confirm Action</th>
-            </tr>
+  <div class="rounded-2xl bg-[#1F2937]/60 border border-white/10 shadow-xl p-6">
+
+    <h3 class="text-xl font-semibold text-[#F0F9FF] mb-4">Claim Summary</h3>
+
+    <div class="overflow-x-auto rounded-lg border border-white/10">
+      <table id="claim-summary-table" class="min-w-full text-sm text-[#F0F9FF]/90">
+        <thead class="bg-[#111827] text-[#F0F9FF]">
+          <tr>
+            <th class="p-3 text-left">Open Date</th>
+            <th class="p-3 text-left">Procedure Notes</th>
+            <th class="p-3 text-center">Claim Type</th>
+            <th class="p-3 text-center">Status</th>
+            <th class="p-3 text-center">Attachments</th>
+            <th class="p-3 text-left">Claim Amount</th>
+            <th class="p-3 text-left">Select Action</th>
+            <th class="p-3 text-center">Confirm Action</th>
+          </tr>
         </thead>
-        <tbody>
-            @for(claim of Claims; track $index){
-                <tr>
-                    <td>
-                        {{claim.openDate | date:'dd MMMM yyyy'}}
-                    </td>
-                    <td>
-                        {{claim.procedureNotes}}
-                    </td>
-                    <td class="text-center">
-                        <span class="badge bg-info">{{claim.claimType}}</span>
-                    </td>
-                    <td class="text-center"><span class="badge" [ngClass]="{
-                            'bg-success': claim.status === 'APPROVED',
-                            'bg-primary': claim.status === 'CREATED',
-                            'bg-danger': claim.status === 'REJECTED',
-                            'bg-warning': claim.status === 'IN REVIEW'
-                        }">
-                            {{claim.status}}
-                        </span>
-                    </td>
 
-                    
-                    <td>
-                        <button type="button" 
-                        (click)="onDownloadDocument(claim.claimId)" 
-                        class="btn btn-outline-primary">Download</button>
-                    </td>
+        <tbody class="divide-y divide-white/8 bg-[#0F172A]">
 
-                     <td>@if(claim.claimType === 'PRE' && claim.selectedAction === '3') {
-                            <input type="number"
-                                class="form-control form-control-sm"
-                                    [(ngModel)]="claim.claimAmount"
-                                min="1"
-                                [ngClass]="{'is-invalid': claim.claimAmount == 0}" />
-                            @if(claim.claimAmount == 0) {
-                            <div class="text-danger small mt-1">reimbursement amount must be non-zero</div>
-                            }
-                        }
-                        @else {
-                            Rs.{{claim.claimAmount}}
-                        }
-                    </td>
-                    <td>
-                    <select [(ngModel)]="claim.selectedAction" class="form-select form-select-sm" placeholder="Select">
-                        @if (claim.status === 'CREATED') {
-                            <option value="" selected>Select Action</option>
-                            <option value="2">REVIEW</option>
-                            <option value="3">APPROVE</option>
-                            <option value="4">REJECT</option>
-                        }
-                        @else if(claim.status === 'IN REVIEW'){
-                            <option value="" selected>Select Action</option>
-                            <option value="3">APPROVE</option>
-                            <option value="4">REJECT</option>
-                        }
-                    </select>
-                    </td>
+          @for (claim of Claims; track $index) {
+            <tr class="hover:bg-[#2563EB]/6 transition">
 
-                    <!-- <td>
-                        <button (click)="ConfirmAction(claim,actionSelect.value)"
-                        class="btn btn-primary btn-sm"
-                        [disabled]="claim.status === 'APPROVED' || claim.status === 'REJECTED'"   
-                        >Confirm
-                    </button>
-                    </td> -->
+              <!-- Open Date -->
+              <td class="p-3 align-top">
+                {{ claim.openDate | date:'dd MMMM yyyy' }}
+              </td>
 
+              <!-- Procedure Notes -->
+              <td class="p-3 align-top max-w-[380px] break-words">
+                {{ claim.procedureNotes }}
+              </td>
 
-                    <td>
-                        <button (click)="ConfirmAction(claim, claim.selectedAction)"
-                            class="btn btn-primary btn-sm"
-                            [disabled]="(claim.claimType === 'PRE' && claim.selectedAction === '3' && (!claim.claimAmount || claim.claimAmount == 0)) || claim.status === 'APPROVED' || claim.status === 'REJECTED'">
-                            Confirm
-                        </button>
-                    </td>
+              <!-- Claim Type -->
+              <td class="p-3 text-center align-top">
+                <span class="inline-block px-3 py-1 rounded-md text-xs font-semibold bg-cyan-500 text-black">
+                  {{ claim.claimType }}
+                </span>
+              </td>
 
+              <!-- Status -->
+              <td class="p-3 text-center align-top">
+                <span
+                  class="inline-block px-3 py-1 rounded-md text-xs font-semibold"
+                  [ngClass]="{
+                    'bg-green-600 text-black': claim.status === 'APPROVED',
+                    'bg-blue-600 text-white': claim.status === 'CREATED',
+                    'bg-red-600 text-black': claim.status === 'REJECTED',
+                    'bg-yellow-500 text-black': claim.status === 'IN REVIEW'
+                  }">
+                  {{ claim.status }}
+                </span>
+              </td>
 
-                </tr>
-            }
+              <!-- Attachments -->
+              <td class="p-3 text-center align-top">
+                <button
+                  type="button"
+                  (click)="onDownloadDocument(claim.claimId)"
+                  class="inline-flex items-center gap-2 px-3 py-1 rounded-md border border-white/10
+                         bg-[#111827] hover:bg-[#111827]/80 text-[#F0F9FF] text-sm">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M12 3v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 11l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M21 21H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Download
+                </button>
+              </td>
+
+              <!-- Claim Amount (conditional edit for PRE + action=3) -->
+              <td class="p-3 align-top">
+                @if (claim.claimType === 'PRE' && claim.selectedAction === '3') {
+                  <div class="w-40">
+                    <input
+                      type="number"
+                      class="w-full rounded-md bg-[#0F172A] border border-white/10 text-[#F0F9FF] px-3 py-1 text-sm"
+                      [(ngModel)]="claim.claimAmount"
+                      min="1"
+                      [ngClass]="{ 'ring-2 ring-red-500': claim.claimAmount == 0 }" />
+
+                    @if (claim.claimAmount == 0) {
+                      <div class="text-red-400 text-xs mt-1">reimbursement amount must be non-zero</div>
+                    }
+                  </div>
+                }
+                @else {
+                  <span>Rs.{{ claim.claimAmount }}</span>
+                }
+              </td>
+
+              <!-- Action Select -->
+              <td class="p-3 align-top">
+                <select
+                  [(ngModel)]="claim.selectedAction"
+                  class="rounded-md bg-[#0F172A] border border-white/10 text-[#F0F9FF] px-3 py-1 text-sm w-full">
+                  @if (claim.status === 'CREATED') {
+                    <option value="" selected>Select Action</option>
+                    <option value="2">REVIEW</option>
+                    <option value="3">APPROVE</option>
+                    <option value="4">REJECT</option>
+                  }
+                  @else if (claim.status === 'IN REVIEW') {
+                    <option value="" selected>Select Action</option>
+                    <option value="3">APPROVE</option>
+                    <option value="4">REJECT</option>
+                  }
+                </select>
+              </td>
+
+              <!-- Confirm Button -->
+              <td class="p-3 text-center align-top">
+                <button
+                  (click)="ConfirmAction(claim, claim.selectedAction)"
+                  class="inline-flex items-center justify-center px-4 py-1 rounded-md bg-[#2563EB] hover:bg-[#3B82F6] text-[#F0F9FF] text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                  [disabled]="(claim.claimType === 'PRE' && claim.selectedAction === '3' && (!claim.claimAmount || claim.claimAmount == 0)) || claim.status === 'APPROVED' || claim.status === 'REJECTED'">
+                  Confirm
+                </button>
+              </td>
+            </tr>
+          }
+
+          @if (Claims && Claims.length === 0) {
+            <tr>
+              <td colspan="8" class="p-6 text-center text-[#F0F9FF]/60">
+                No claims available
+              </td>
+            </tr>
+          }
         </tbody>
-    </table>
+      </table>
+    </div>
+  </div>
 </div>

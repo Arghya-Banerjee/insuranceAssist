@@ -1,91 +1,137 @@
-<form #pdForm="ngForm" (ngSubmit)="save()" novalidate>
-  <div class="personal-details-grid">
-    <div class="detail-item">
-      <label>Username:</label>
-      <span>{{ personal.username }}</span>
+<form #pdForm="ngForm" (ngSubmit)="save()" novalidate class="max-w-[900px] mx-auto">
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+
+    <!-- Username (readonly) -->
+    <div class="bg-[#1F2937]/60 border border-white/10 rounded-xl p-4">
+      <label class="text-sm text-[#F0F9FF]/70">Username</label>
+      <div class="mt-1 text-[#F0F9FF] font-medium">{{ personal.username }}</div>
     </div>
 
-    <div class="detail-item">
-      <label>Name:</label>
-      <span>{{ personal.name }}</span>
+    <!-- Name (readonly) -->
+    <div class="bg-[#1F2937]/60 border border-white/10 rounded-xl p-4">
+      <label class="text-sm text-[#F0F9FF]/70">Name</label>
+      <div class="mt-1 text-[#F0F9FF] font-medium">{{ personal.name }}</div>
     </div>
 
-    <div class="detail-item">
-      <label>Email:</label>
-      <span>{{ personal.email }}</span>
+    <!-- Email (readonly) -->
+    <div class="bg-[#1F2937]/60 border border-white/10 rounded-xl p-4">
+      <label class="text-sm text-[#F0F9FF]/70">Email</label>
+      <div class="mt-1 text-[#F0F9FF] font-medium">{{ personal.email }}</div>
     </div>
 
-    <div class="detail-item">
-      <label>DOB:</label>
-      <span>{{ personal.dob }}</span>
+    <!-- DOB (readonly) -->
+    <div class="bg-[#1F2937]/60 border border-white/10 rounded-xl p-4">
+      <label class="text-sm text-[#F0F9FF]/70">DOB</label>
+      <div class="mt-1 text-[#F0F9FF] font-medium">{{ personal.dob }}</div>
     </div>
 
-    <!-- Phone with validation while editing -->
-    <div class="detail-item">
-      <label>Phone:</label>
-      <span *ngIf="!editing">{{ personal.phone }}</span>
-      <div *ngIf="editing">
-        <input
-          type="tel"
-          [(ngModel)]="temp.phone"
-          name="phone"
-          required
-          pattern="^[0-9]{10}$"
-          maxlength="10"
-          #phoneModel="ngModel"
-          placeholder="10-digit phone number"
-        />
-        <div class="error" *ngIf="phoneModel.invalid && (phoneModel.dirty || phoneModel.touched)">
-          <small *ngIf="phoneModel.errors?.['required']">Phone is required.</small>
-          <small *ngIf="phoneModel.errors?.['pattern']">Phone must be exactly 10 digits.</small>
+    <!-- Phone (editable) -->
+    <div class="bg-[#1F2937]/60 border border-white/10 rounded-xl p-4">
+      <label class="text-sm text-[#F0F9FF]/70">Phone</label>
+
+      @if (!editing) {
+        <div class="mt-1 text-[#F0F9FF] font-medium">{{ personal.phone }}</div>
+      }
+      @else {
+        <div class="mt-2">
+          <input
+            type="tel"
+            [(ngModel)]="temp.phone"
+            name="phone"
+            required
+            pattern="^[0-9]{10}$"
+            maxlength="10"
+            #phoneModel="ngModel"
+            placeholder="10-digit phone number"
+            class="w-full rounded-md bg-[#0F172A] border border-white/10 px-3 py-2 text-[#F0F9FF] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/30"
+          />
+
+          <div class="text-xs text-rose-400 mt-2">
+            @if (phoneModel.invalid && (phoneModel.dirty || phoneModel.touched)) {
+              @if (phoneModel.errors?.['required']) {
+                <small>Phone is required.</small>
+              }
+              @if (phoneModel.errors?.['pattern']) {
+                <small>Phone must be exactly 10 digits.</small>
+              }
+            }
+          </div>
         </div>
-      </div>
+      }
     </div>
 
-    <div class="detail-item">
-      <label>Gender:</label>
-      <span>{{ personal.gender }}</span>
+    <!-- Gender (readonly) -->
+    <div class="bg-[#1F2937]/60 border border-white/10 rounded-xl p-4">
+      <label class="text-sm text-[#F0F9FF]/70">Gender</label>
+      <div class="mt-1 text-[#F0F9FF] font-medium">{{ personal.gender }}</div>
     </div>
 
-    <!-- Address with validation while editing -->
-    <div class="detail-item">
-      <label>Address:</label>
-      <span *ngIf="!editing">{{ personal.address }}</span>
-      <div *ngIf="editing">
-        <input
-          [(ngModel)]="temp.address"
-          name="address"
-          required
-          minlength="5"
-          #addrModel="ngModel"
-          placeholder="Enter address"
-        />
-        <div class="error" *ngIf="addrModel.invalid && (addrModel.dirty || addrModel.touched)">
-          <small *ngIf="addrModel.errors?.['required']">Address is required.</small>
-          <small *ngIf="addrModel.errors?.['minlength']">Minimum 5 characters.</small>
+    <!-- Address (editable) -->
+    <div class="bg-[#1F2937]/60 border border-white/10 rounded-xl p-4 sm:col-span-2">
+      <label class="text-sm text-[#F0F9FF]/70">Address</label>
+
+      @if (!editing) {
+        <div class="mt-1 text-[#F0F9FF] font-medium">{{ personal.address }}</div>
+      }
+      @else {
+        <div class="mt-2">
+          <input
+            [(ngModel)]="temp.address"
+            name="address"
+            required
+            minlength="5"
+            #addrModel="ngModel"
+            placeholder="Enter address"
+            class="w-full rounded-md bg-[#0F172A] border border-white/10 px-3 py-2 text-[#F0F9FF] focus:outline-none focus:ring-2 focus:ring-[#2563EB]/30"
+          />
+
+          <div class="text-xs text-rose-400 mt-2">
+            @if (addrModel.invalid && (addrModel.dirty || addrModel.touched)) {
+              @if (addrModel.errors?.['required']) {
+                <small>Address is required.</small>
+              }
+              @if (addrModel.errors?.['minlength']) {
+                <small>Minimum 5 characters.</small>
+              }
+            }
+          </div>
         </div>
-      </div>
+      }
     </div>
+
   </div>
 
-  <!-- Optional TS-side summary (if any) -->
-  <div class="error-list" *ngIf="validationErrors.length">
-    <div class="error" *ngFor="let e of validationErrors">{{ e }}</div>
+  <!-- Optional TS-side summary errors -->
+  @if (validationErrors?.length) {
+    <div class="mb-4 rounded-md bg-rose-900/20 border border-rose-700/20 p-3 text-sm text-rose-200">
+      @for (err of validationErrors; track $index) {
+        <div>{{ err }}</div>
+      }
+    </div>
+  }
+
+  <!-- Actions -->
+  <div class="flex items-center gap-3">
+    @if (!editing) {
+      <button type="button" (click)="edit()" class="px-4 py-2 rounded-lg bg-[#2563EB] hover:bg-[#3B82F6] text-white transition">
+        Edit
+      </button>
+    }
+    @else {
+      <button
+        type="submit"
+        class="px-4 py-2 rounded-lg bg-[#2563EB] hover:bg-[#3B82F6] text-white transition"
+        [disabled]="pdForm.invalid"
+        title="Fix validation errors to enable save"
+      >
+        Save
+      </button>
+
+      <button type="button" (click)="cancel()" class="px-4 py-2 rounded-lg border border-white/10 text-[#F0F9FF]/90 hover:bg-white/5 transition">
+        Cancel
+      </button>
+    }
   </div>
 
-  <div class="actions">
-    <button *ngIf="!editing" type="button" (click)="edit()" class="blue-btn">Edit</button>
-
-    <button
-      *ngIf="editing"
-      type="submit"
-      class="blue-btn"
-      [disabled]="pdForm.invalid"
-      title="Fix validation errors to enable save"
-    >
-      Save
-    </button>
-
-    <button *ngIf="editing" type="button" (click)="cancel()" class="cancel-btn">Cancel</button>
-  </div>
 </form>

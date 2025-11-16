@@ -1,35 +1,82 @@
-<header>
-  <title>Insurance Assist - Agent Dashboard</title>
-</header>
+<!-- Tabs (centered) -->
+<nav class="w-full bg-[#1F2937]/80 border-b border-white/10">
+  <div class="max-w-[1400px] mx-auto w-full px-6">
+    <ul id="ia-agent-tabs" class="flex justify-center gap-4 py-3">
+      <li class="nav-item">
+        <button
+          id="overview-btn"
+          (click)="setTab('overview')"
+          type="button"
+          class="px-4 py-2 rounded-lg text-sm font-medium transition
+                 text-[#F0F9FF]/70 hover:text-[#F0F9FF] hover:bg-[#2563EB]/20"
+          [class.bg-[#2563EB]]="activeTab === 'overview'"
+          [class.text-[#F0F9FF]]="activeTab === 'overview'"
+        >
+          Overview
+        </button>
+      </li>
 
-<ul class="nav nav-tabs mb-4">
-  <li class="nav-item">
-    <a class="nav-link" id="overview-btn" [class.active] = "activeTab === 'overview'" style="cursor:pointer" (click) = "setTab('overview')">Overview</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="claim-approval-btn" [class.active] = "activeTab === 'claim-approval'" style="cursor:pointer" (click)="setTab('claim-approval')">Claim Approval</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="claim-history-btn" [class.active] = "activeTab === 'claim-history'" style="cursor:pointer" (click)="setTab('claim-history')">Claim History</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="network-hospital-btn" [class.active] = "activeTab === 'network-hospitals'" style="cursor:pointer" (click)="setTab('network-hospitals')">Network Hospitals</a>
-  </li>
-</ul>
+      <li class="nav-item">
+        <button
+          id="claim-approval-btn"
+          (click)="setTab('claim-approval')"
+          type="button"
+          class="px-4 py-2 rounded-lg text-sm font-medium transition
+                 text-[#F0F9FF]/70 hover:text-[#F0F9FF] hover:bg-[#2563EB]/20"
+          [class.bg-[#2563EB]]="activeTab === 'claim-approval'"
+          [class.text-[#F0F9FF]]="activeTab === 'claim-approval'"
+        >
+          Claim Approval
+        </button>
+      </li>
 
+      <li class="nav-item">
+        <button
+          id="claim-history-btn"
+          (click)="setTab('claim-history')"
+          type="button"
+          class="px-4 py-2 rounded-lg text-sm font-medium transition
+                 text-[#F0F9FF]/70 hover:text-[#F0F9FF] hover:bg-[#2563EB]/20"
+          [class.bg-[#2563EB]]="activeTab === 'claim-history'"
+          [class.text-[#F0F9FF]]="activeTab === 'claim-history'"
+        >
+          Claim History
+        </button>
+      </li>
 
-@if(activeTab === 'overview'){
-  <app-overview/> 
-}
+      <li class="nav-item">
+        <button
+          id="network-hospital-btn"
+          (click)="setTab('network-hospitals')"
+          type="button"
+          class="px-4 py-2 rounded-lg text-sm font-medium transition
+                 text-[#F0F9FF]/70 hover:text-[#F0F9FF] hover:bg-[#2563EB]/20"
+          [class.bg-[#2563EB]]="activeTab === 'network-hospitals'"
+          [class.text-[#F0F9FF]]="activeTab === 'network-hospitals'"
+        >
+          Network Hospitals
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>
 
-@if(activeTab === 'claim-approval'){
-  <app-claim-approval/>
-}
+<!-- Content container (centered, limited width) -->
+<main class="w-full bg-transparent">
+  <div class="max-w-[1400px] mx-auto px-6 py-6">
 
-@if(activeTab === 'claim-history'){
-  <app-claim-history/>
-}
+    @if(activeTab === 'overview') {
+      <app-overview id="agent-pane-overview" class="ia-tab-pane"></app-overview>
+    }
+    @else if(activeTab === 'claim-approval') {
+      <app-claim-approval id="agent-pane-claim-approval" class="ia-tab-pane"></app-claim-approval>
+    }
+    @else if(activeTab === 'claim-history') {
+      <app-claim-history id="agent-pane-claim-history" class="ia-tab-pane"></app-claim-history>
+    }
+    @else if(activeTab === 'network-hospitals') {
+      <app-agent-network-hospitals id="agent-pane-network-hospitals" class="ia-tab-pane"></app-agent-network-hospitals>
+    }
 
-@if(activeTab === 'network-hospitals'){
-  <app-agent-network-hospitals/>
-}
+  </div>
+</main>

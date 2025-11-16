@@ -19,45 +19,48 @@
         />
       </div>
 
-      <!-- Buttons -->
-      <div class="flex flex-wrap gap-2">
+      <!-- Improved Filter Buttons UI with Green + Blue Buttons -->
+      <div class="flex flex-wrap items-center gap-2">
 
+        <!-- Network Only (Green Button) -->
         <button
           id="network-filter-btn"
           (click)="filterNetworkHospitals()"
           [ngClass]="networkButtonClass"
-          class="px-3 py-1 rounded-md text-sm font-medium transition border border-white/10"
-        >
-          Network Only
+          class="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-medium
+                bg-green-600 text-white hover:bg-green-700 transition shadow-sm">
+          <i class="fas fa-sitemap text-sm"></i>
+          <span>Network Only</span>
         </button>
 
+        <!-- Rating (Blue Button) -->
         <button
           id="rating-filter-btn"
           (click)="onRatingButtonPressed()"
           [ngClass]="ratingButtonClass"
-          class="px-3 py-1 rounded-md text-sm font-medium transition border border-white/10"
-        >
-          Rating
+          class="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg text-sm font-medium
+                bg-blue-600 text-white hover:bg-blue-700 transition shadow-sm">
+          <i class="fas fa-star text-sm"></i>
+          <span>Rating</span>
         </button>
 
+        <!-- Sort Asc -->
         <button
           id="asc-btn"
           (click)="onAscendingButtonPressed()"
-          class="px-3 py-1 rounded-md bg-[#111827] border border-white/10 text-[#F0F9FF] hover:bg-[#111827]/80"
-          title="Sort Ascending"
-        >
+          class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-[#111827] 
+                border border-white/10 text-[#F0F9FF] hover:bg-[#1F2937] transition">
           <i class="fas fa-sort-up"></i>
         </button>
 
+        <!-- Sort Desc -->
         <button
           id="desc-btn"
           (click)="onDescendingButtonPressed()"
-          class="px-3 py-1 rounded-md bg-[#111827] border border-white/10 text-[#F0F9FF] hover:bg-[#111827]/80"
-          title="Sort Descending"
-        >
+          class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-[#111827] 
+                border border-white/10 text-[#F0F9FF] hover:bg-[#1F2937] transition">
           <i class="fas fa-sort-down"></i>
         </button>
-
       </div>
     </div>
   </div>

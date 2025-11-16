@@ -1,39 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="profile-container">
-      <button class="close-btn" (click)="goBack()" aria-label="Close">&times;</button>
-      <aside class="sidebar">
-        <img src="default-profile-pic.png" alt="Profile Picture" class="profile-pic" />
-        <nav>
-          <ul>
-            <li [class.active]="activeTab==='personal'" (click)="activeTab='personal'">Personal Details</li>
-            <li [class.active]="activeTab==='policy'" (click)="activeTab='policy'">Policy Details</li>
-            <li [class.active]="activeTab==='dependents'" (click)="activeTab='dependents'">Dependents Details</li>
-          </ul>
-        </nav>
-      </aside>
-      <section class="main-section">
-        <div class="profile-title">
-          <ng-container *ngIf="activeTab==='personal'">Personal Details</ng-container>
-          <ng-container *ngIf="activeTab==='policy'">Policy Details</ng-container>
-          <ng-container *ngIf="activeTab==='dependents'">Dependents Details</ng-container>
-        </div>
-        <main class="tab-content">
-          <ng-container *ngIf="activeTab==='personal'">
-            <app-personal-details></app-personal-details>
-          </ng-container>
-          <ng-container *ngIf="activeTab==='policy'">
-            <app-policy-details></app-policy-details>
-          </ng-container>
-          <ng-container *ngIf="activeTab==='dependents'">
-            <app-dependents-details></app-dependents-details>
-          </ng-container>
-        </main>
-      </section>
-    </div>
-</body>
-</html>
+<div class="w-full min-h-screen bg-[#0F172A] text-[#F0F9FF] font-inter relative">
+
+  <!-- Close Button -->
+  <button 
+    (click)="goBack()"
+    class="absolute top-4 right-4 text-[#F0F9FF]/70 hover:text-[#F0F9FF]
+           text-3xl font-bold transition">
+    &times;
+  </button>
+
+  <!-- Layout Wrapper -->
+  <div class="flex max-w-[1400px] mx-auto py-10 px-6 gap-6">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-[#1F2937]/70 rounded-2xl border border-white/10 
+                  p-6 shadow-lg flex flex-col items-center">
+
+      <!-- Profile Image -->
+      <div class="w-28 h-28 rounded-full border-4 border-[#2563EB]/50 overflow-hidden shadow-md mb-6">
+        <img src="default-profile-pic.png" class="w-full h-full object-cover" />
+      </div>
+
+      <!-- Sidebar Navigation -->
+      <nav class="w-full">
+        <ul class="space-y-2">
+
+          <!-- PERSONAL DETAILS -->
+          <li>
+            <button 
+              (click)="activeTab='personal'"
+              class="w-full text-left px-4 py-2 rounded-lg transition 
+                     font-medium text-sm
+                     hover:bg-[#2563EB]/20"
+              [class.bg-[#2563EB]]="activeTab==='personal'"
+              [class.text-white]="activeTab==='personal'"
+              [class.text-[#F0F9FF]/70]="activeTab!=='personal'">
+              Personal Details
+            </button>
+          </li>
+
+          <!-- POLICY DETAILS -->
+          <li>
+            <button 
+              (click)="activeTab='policy'"
+              class="w-full text-left px-4 py-2 rounded-lg transition 
+                     font-medium text-sm
+                     hover:bg-[#2563EB]/20"
+              [class.bg-[#2563EB]]="activeTab==='policy'"
+              [class.text-white]="activeTab==='policy'"
+              [class.text-[#F0F9FF]/70]="activeTab!=='policy'">
+              Policy Details
+            </button>
+          </li>
+
+          <!-- DEPENDENTS DETAILS -->
+          <li>
+            <button 
+              (click)="activeTab='dependents'"
+              class="w-full text-left px-4 py-2 rounded-lg transition 
+                     font-medium text-sm
+                     hover:bg-[#2563EB]/20"
+              [class.bg-[#2563EB]]="activeTab==='dependents'"
+              [class.text-white]="activeTab==='dependents'"
+              [class.text-[#F0F9FF]/70]="activeTab!=='dependents'">
+              Dependents Details
+            </button>
+          </li>
+
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Section -->
+    <section class="flex-1 bg-[#1F2937]/70 rounded-2xl border border-white/10 
+                    p-8 shadow-lg">
+
+      <!-- Tab Title -->
+      <div class="text-2xl font-semibold mb-6 flex items-center gap-2">
+        @if (activeTab==='personal') { Personal Details }
+        @else if (activeTab==='policy') { Policy Details }
+        @else if (activeTab==='dependents') { Dependents Details }
+      </div>
+
+      <!-- TAB CONTENT -->
+      <main>
+        @if (activeTab==='personal') {
+          <app-personal-details />
+        }
+        @else if (activeTab==='policy') {
+          <app-policy-details />
+        }
+        @else if (activeTab==='dependents') {
+          <app-dependents-details />
+        }
+      </main>
+
+    </section>
+
+  </div>
+</div>
