@@ -1,0 +1,206 @@
+<!-- FULL PAGE WRAPPER -->
+<div class="min-h-screen bg-[#1F2937] text-[#F0F9FF] flex justify-center items-start py-12 px-4">
+
+  <!-- MAIN CARD -->
+  <div class="w-full max-w-3xl bg-[#1F2937]/60 border border-white/10 rounded-xl p-6 shadow-xl backdrop-blur">
+
+    <h2 class="text-2xl font-bold text-[#F0F9FF] mb-2">Dependents Details</h2>
+    <p class="text-sm text-[#F0F9FF]/70 mb-6">Add up to 4 dependents. You may skip if not required now.</p>
+
+    <form [formGroup]="registerDependentForm" class="space-y-4">
+      <div formArrayName="dependents" class="space-y-5">
+
+        @for (dependent of dependents.controls; track $index) {
+
+        <!-- SINGLE DEPENDENT CARD (REMOVE BUTTON REMOVED FROM HERE) -->
+        <div [formGroupName]="$index"
+             class="rounded-lg p-4 border border-white/10 bg-[#1F2937]/50 shadow-sm">
+
+          <h5 class="text-sm font-semibold mb-3">Dependent {{ $index + 1 }}</h5>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+            <!-- Name -->
+            <div>
+              <label [for]="'dep' + ($index + 1) + 'name'"
+                     class="block text-xs text-[#F0F9FF]/80 mb-1">Name</label>
+              <input
+                [id]="'dep' + ($index + 1) + 'name'"
+                type="text"
+                formControlName="name"
+                placeholder="Enter full name"
+                class="w-full px-3 py-2 rounded-lg bg-[#1F2937]/40 border border-white/10
+                       text-[#F0F9FF] placeholder-[#F0F9FF]/40
+                       focus:border-[#3B82F6] focus:ring-2 focus:ring-[#2563EB]/30 outline-none">
+            </div>
+
+            <!-- DOB -->
+            <div>
+              <label [for]="'dep' + ($index + 1) + 'dob'"
+                     class="block text-xs text-[#F0F9FF]/80 mb-1">Date of Birth</label>
+              <input
+                [id]="'dep' + ($index + 1) + 'dob'"
+                type="date"
+                formControlName="dob"
+                class="w-full px-3 py-2 rounded-lg bg-[#1F2937]/40 border border-white/10
+                       text-[#F0F9FF] focus:border-[#3B82F6] focus:ring-2 focus:ring-[#2563EB]/30 outline-none">
+            </div>
+
+            <!-- Contact -->
+            <div>
+              <label [for]="'dep' + ($index + 1) + 'contact'"
+                     class="block text-xs text-[#F0F9FF]/80 mb-1">Contact Number</label>
+              <input
+                [id]="'dep' + ($index + 1) + 'contact'"
+                type="text"
+                formControlName="contact"
+                placeholder="Enter contact number"
+                class="w-full px-3 py-2 rounded-lg bg-[#1F2937]/40 border border-white/10
+                       text-[#F0F9FF] placeholder-[#F0F9FF]/40
+                       focus:border-[#3B82F6] focus:ring-2 focus:ring-[#2563EB]/30 outline-none">
+            </div>
+
+            <!-- Email -->
+            <div>
+              <label [for]="'dep' + ($index + 1) + 'email'"
+                     class="block text-xs text-[#F0F9FF]/80 mb-1">Email ID</label>
+              <input
+                [id]="'dep' + ($index + 1) + 'email'"
+                type="email"
+                formControlName="email"
+                placeholder="Enter email id"
+                class="w-full px-3 py-2 rounded-lg bg-[#1F2937]/40 border border-white/10
+                       text-[#F0F9FF] placeholder-[#F0F9FF]/40
+                       focus:border-[#3B82F6] focus:ring-2 focus:ring-[#2563EB]/30 outline-none">
+            </div>
+
+            <!-- Address full width -->
+            <div class="sm:col-span-2">
+              <label [for]="'dep' + ($index + 1) + 'address'"
+                     class="block text-xs text-[#F0F9FF]/80 mb-1">Address</label>
+              <textarea
+                [id]="'dep' + ($index + 1) + 'address'"
+                rows="2"
+                formControlName="address"
+                placeholder="Enter Address"
+                class="w-full px-3 py-2 rounded-lg bg-[#1F2937]/40 border border-white/10
+                       text-[#F0F9FF] placeholder-[#F0F9FF]/40
+                       focus:border-[#3B82F6] focus:ring-2 focus:ring-[#2563EB]/30 outline-none"></textarea>
+            </div>
+
+            <!-- Gender -->
+            <div>
+              <label [for]="'dep' + ($index + 1) + 'gender'"
+                     class="block text-xs text-[#F0F9FF]/80 mb-1">Gender</label>
+              <div class="relative">
+                <select
+                  [id]="'dep' + ($index + 1) + 'gender'"
+                  formControlName="gender"
+                  class="w-full px-3 py-2 rounded-lg bg-[#1F2937]/40 border border-white/10 
+                         text-[#F0F9FF] appearance-none pr-10
+                         focus:border-[#3B82F6] focus:ring-2 focus:ring-[#2563EB]/30">
+                  <option value="" disabled class="bg-[#F0F9FF] text-[#1F2937]">Select gender</option>
+                  <option value="M" class="bg-[#F0F9FF] text-[#1F2937]">Male</option>
+                  <option value="F" class="bg-[#F0F9FF] text-[#1F2937]">Female</option>
+                </select>
+
+                <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#F0F9FF]/70"
+                     viewBox="0 0 20 20" fill="none">
+                  <path d="M6 8l4 4 4-4"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+              </div>
+            </div>
+
+            <!-- Relation -->
+            <div>
+              <label [for]="'dep' + ($index + 1) + 'relationTypeId'"
+                     class="block text-xs text-[#F0F9FF]/80 mb-1">Relationship Type</label>
+              <div class="relative">
+                <select
+                  [id]="'dep' + ($index + 1) + 'relationTypeId'"
+                  formControlName="relationTypeId"
+                  class="w-full px-3 py-2 rounded-lg bg-[#1F2937]/40 border border-white/10 
+                         text-[#F0F9FF] appearance-none pr-10
+                         focus:border-[#3B82F6] focus:ring-2 focus:ring-[#2563EB]/30">
+
+                  <option value="" disabled class="bg-[#F0F9FF] text-[#1F2937]">Select relation</option>
+                  <option value="1" class="bg-[#F0F9FF] text-[#1F2937]">Father</option>
+                  <option value="2" class="bg-[#F0F9FF] text-[#1F2937]">Mother</option>
+                  <option value="3" class="bg-[#F0F9FF] text-[#1F2937]">Brother</option>
+                  <option value="4" class="bg-[#F0F9FF] text-[#1F2937]">Sister</option>
+                  <option value="5" class="bg-[#F0F9FF] text-[#1F2937]">Wife</option>
+                  <option value="6" class="bg-[#F0F9FF] text-[#1F2937]">Husband</option>
+                  <option value="7" class="bg-[#F0F9FF] text-[#1F2937]">Son</option>
+                  <option value="8" class="bg-[#F0F9FF] text-[#1F2937]">Daughter</option>
+                  <option value="9" class="bg-[#F0F9FF] text-[#1F2937]">Guardian</option>
+
+                </select>
+
+                <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#F0F9FF]/70"
+                     viewBox="0 0 20 20" fill="none">
+                  <path d="M6 8l4 4 4-4"
+                        stroke="currentColor"
+                        stroke-width="1.6"
+                        stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        }
+
+      </div>
+
+      <!-- ACTION BUTTONS -->
+      <div class="flex flex-col sm:flex-row gap-3 mt-4">
+
+        <button type="button"
+                id="add-dependent-btn"
+                (click)="addDependent()"
+                [disabled]="dependents.length >= 4"
+                class="flex-1 px-4 py-2 rounded-lg bg-[#2563EB] hover:bg-[#3B82F6] 
+                       text-[#F0F9FF] font-semibold transition disabled:opacity-50">
+          Add Dependent
+        </button>
+
+        <!-- Only one global remove button -->
+        <button type="button"
+                id="remove-dependent-btn"
+                (click)="removeDependent(dependents.length - 1)"
+                [disabled]="dependents.length === 1"
+                class="flex-1 px-4 py-2 rounded-lg bg-[#1F2937]/30 border border-white/10 
+                       text-[#F0F9FF] hover:bg-[#1F2937]/40 transition disabled:opacity-40">
+          Remove Last
+        </button>
+
+      </div>
+
+      <div class="mt-6 space-y-3">
+
+        <button type="button"
+                id="skip-dependent-btn"
+                (click)="skipDependents()"
+                class="w-full px-4 py-2 rounded-lg bg-transparent border border-white/10 
+                       text-[#F0F9FF]/90 hover:bg-[#2563EB]/10 transition">
+          Skip for now
+        </button>
+
+        <button type="button"
+                id="continue-btn"
+                (click)="nextStep()"
+                class="w-full px-4 py-2 rounded-lg bg-[#2563EB] hover:bg-[#3B82F6] 
+                       text-[#F0F9FF] font-semibold transition">
+          Continue
+        </button>
+
+      </div>
+
+    </form>
+  </div>
+</div>

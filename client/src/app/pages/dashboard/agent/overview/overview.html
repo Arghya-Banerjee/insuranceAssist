@@ -1,0 +1,94 @@
+<div class="container my-5">
+
+  <!-- Agent header -->
+
+
+  <!-- Agent profile box -->
+  <div class="card border-0 shadow-lg rounded-4 mb-4">
+    <div class="card-body d-flex align-items-center">
+      <img
+        src="default-profile-pic.png"
+        alt="Agent photo"
+        class="rounded-circle border border-3 border-primary shadow-sm me-4"
+        style="width: 100px; height: 100px; object-fit: cover;"
+      >
+      <div>
+        <h3 class="fw-bold mb-1">Agent: {{agentDetails.name}}</h3>
+        <p class="text-secondary mb-0">User Name: {{agentDetails.username}}</p>
+        <p class="text-secondary mb-0">Date Of Birth : {{agentDetails.dob | date:'shortDate'}}</p>
+        <p class="text-secondary mb-0">Email: {{agentDetails.email}}</p>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick stats -->
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <div class="card text-center shadow-sm rounded-4">
+        <div class="card-body">
+          <h5 class="fw-semibold text-primary">Total Claims</h5>
+          <h2 class="fw-bold">{{totalClients}}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center shadow-sm rounded-4">
+        <div class="card-body">
+          <h5 class="fw-semibold text-primary">Active Policies</h5>
+          <h2 class="fw-bold">{{activeClients }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center shadow-sm rounded-4">
+        <div class="card-body">
+          <h5 class="fw-semibold text-primary">Total Amount Approved</h5>
+          <h2 class="fw-bold">Rs.{{totalAmountClaimPassed}}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client list -->
+  <div class="card border-0 shadow-lg rounded-4 mb-4">
+    <div class="card-body">
+      <h5 class="text-primary fw-semibold mb-3">Newest Updates</h5>
+      <table class="table table-bordered table-hover table-striped align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Open Date</th>
+            <th scope="col">Procedure Notes</th>
+            <th class="text-center" scope="col">Claim Type</th>
+            <th class="text-center" scope="col">Status</th>
+            <th scope="col">Last Updated</th>
+            <th scope="col">Claim Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+        @for(claim of latestClaims; track $index){
+            <tr>
+              
+              <td>{{claim.openDate | date:'dd MMMM yyyy'}}</td>
+              <td>{{claim.procedureNotes}}</td>
+              <td class="text-center"><span class="badge bg-info text-dark">{{claim.claimType}}</span></td>
+              <td class="text-center"><span class="badge" [ngClass]="{
+                            'bg-success': claim.status === 'APPROVED',
+                            'bg-primary': claim.status === 'CREATED',
+                            'bg-danger': claim.status === 'REJECTED',
+                            'bg-warning text-dark': claim.status === 'IN REVIEW'
+                        }">
+                            {{claim.status}}
+                </span></td>
+              <td>{{claim.updatedAt | date:'short'}}</td>
+              <td>Rs.{{claim.claimAmount}}</td>
+            </tr>
+        }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
+</div>

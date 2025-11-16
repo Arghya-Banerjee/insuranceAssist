@@ -1,0 +1,9 @@
+{
+  "name": "testhospital2",
+  "address": "adress for test hospital2",
+  "email": "testhospital2@gmial.com",
+  "rating": 3.4,
+  "clientContactEmail": "test@test.test",
+  "clientContactNumber": 1234567890,
+  "network": 0
+}

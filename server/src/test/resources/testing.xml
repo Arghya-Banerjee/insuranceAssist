@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="InsuranceAssist Automation Suite" parallel="classes" thread-count="4">
+
+    <test name="Cucumber Test Execution" verbose="1">
+        <classes>
+            <!-- Your TestNG Runner class -->
+            <class name="com.insuranceAssist.runners.ui.client.ClientLoginTestRunner"/>
+            <class name="com.insuranceAssist.runners.ui.agent.AgentLoginTestRunner"/>
+            <class name="com.insuranceAssist.runners.ui.agent.AgentClaimHistoryTestRunner"/>
+        </classes>
+    </test>
+
+</suite>

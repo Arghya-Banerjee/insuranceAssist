@@ -1,0 +1,49 @@
+<div id="ia-new-claim-card" class="card p-4 shadow-sm ia-card">
+
+  <h5 id="ia-new-claim-title" class="ia-title">Create a New Claim</h5>
+  <p id="ia-new-claim-subtitle" class="ia-subtitle">Fill the form below</p>
+
+  <form id="ia-new-claim-form" [formGroup]="newClaimForm" (ngSubmit)="onCreateClaim()">
+
+    <!-- Claim Type -->
+    <div id="ia-claim-type-wrapper" class="mb-3 ia-field">
+      <label for="claimType" id="ia-claim-type-label" class="form-label ia-label">Claim Type</label>
+      <select id="claimType"
+              formControlName="claimType"
+              class="form-select ia-input-select">
+        <option value="" disabled selected>Select claim type</option>
+        <option value="1">Pre-Authorization (Cashless)</option>
+        <option value="2">Post-Authorization (Reimbursement)</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="procedureNotes" class="form-label">Procedure details (Atleast 10 charachters)</label>
+      <textarea class="form-control" formControlName="procedureNotes" id="procedureNotes" placeholder="Enter the procedure details" rows="3" minlength="10"></textarea>
+    </div>
+
+    <!-- Claim Amount (conditional) -->
+    @if (newClaimForm.get('claimType')?.value === '2') {
+    <div class="mb-3">
+        <label for="claimAmount" class="form-label">Claim Amount (₹)</label>
+        <input type="number" formControlName="claimAmount" class="form-control" id="claimAmount" placeholder="Enter the amount to claim" min="500">
+    </div>
+    }
+
+    <!-- Document Upload -->
+    <div id="ia-document-upload-wrapper" class="mb-3 ia-field">
+      <label for="documentUpload" id="ia-document-upload-label" class="form-label ia-label">Upload Documents</label>
+      <input id="documentUpload"
+             type="file"
+             (change)="onDocumentUpload($event)"
+             class="form-control ia-input-file"
+             multiple>
+    </div>
+    <button type="submit" class="btn btn-primary w-100" [disabled]="!newClaimForm.valid || isClaimAmountExceedsPremium() || !file">Submit Claim</button>
+        @if(isClaimAmountExceedsPremium()){
+            <div class="text-danger">
+                Claim amount cannot exceed your remaining coverage.
+            </div>
+        }
+  </form>
+</div>

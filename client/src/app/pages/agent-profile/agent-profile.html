@@ -1,0 +1,22 @@
+<div class="profile-container">
+  <button class="close-btn" (click)="goBack()" aria-label="Close">&times;</button>
+  <aside class="sidebar">
+    <img src="default-profile-pic.png" alt="Profile Picture" class="profile-pic" />
+    <nav>
+      <ul>
+        <li [class.active]="activeTab==='personal'" (click)="activeTab='personal'">Personal Details</li>
+        <!-- Future tabs can be added here -->
+      </ul>
+    </nav>
+  </aside>
+  <section class="main-section">
+    <div class="profile-title">
+      Personal Details
+    </div>
+    <main class="tab-content">
+      <ng-container *ngIf="activeTab==='personal'">
+        <app-agent-personal-details></app-agent-personal-details>
+      </ng-container>
+    </main>
+  </section>
+</div>

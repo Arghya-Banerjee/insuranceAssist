@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Priya Nair",
+    "gender": "F",
+    "dob": "2026-03-22",
+    "phone": 9123456789,
+    "address": "Kochi, Kerala",
+    "email": "priya.nair@test.com",
+    "password": "Secure#456"
+  },
+  {
+    "name": "Rahul Verma",
+    "gender": "M",
+    "dob": "1992-11-05",
+    "phone": 9988776655,
+    "address": "Mumbai, Maharashtra",
+    "email": "rahul.vermatest.com",
+    "password": "MyPwd!789"
+  },
+  {
+    "name": "Sneha Iyer",
+    "gender": "F",
+    "dob": "2000-01-10",
+    "phone": 3871203456,
+    "address": "Chennai, Tamil Nadu",
+    "email": "sneha.iyer@test.com",
+    "password": "StrongPwd@321"
+  }
+]

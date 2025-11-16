@@ -1,0 +1,61 @@
+/* Card */
+.ia-card {
+  border-radius: 1rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+}
+
+/* Titles */
+.ia-title {
+  font-weight: 700;
+  margin-bottom: .5rem;
+}
+
+.ia-subtitle {
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+/* Fields */
+.ia-field {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Labels */
+.ia-label {
+  font-weight: 600;
+  margin-bottom: .35rem;
+}
+
+/* Inputs */
+.ia-input-select,
+.ia-input-textarea,
+.ia-input-number,
+.ia-input-file {
+  border-radius: .5rem;
+  border: 1px solid #d1d5db;
+  padding: .55rem .75rem;
+}
+
+/* On focus */
+.ia-input-select:focus,
+.ia-input-textarea:focus,
+.ia-input-number:focus,
+.ia-input-file:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+}
+
+/* Submit button */
+.ia-submit-btn {
+  border-radius: .6rem;
+  padding: .75rem;
+  font-weight: 600;
+}
+
+/* Error message */
+.ia-error {
+  margin-top: .75rem;
+  font-weight: 600;
+}

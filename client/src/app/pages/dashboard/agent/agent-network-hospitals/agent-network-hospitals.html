@@ -1,0 +1,181 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<div class="card p-4 shadow-sm">
+
+  <!-- Search + Filters Row -->
+  <div class="row mb-4">
+    <div class="col-md-12">
+      <div class="input-group">
+
+        <!-- Search icon -->
+        <span class="input-group-text">
+          <i class="fas fa-search"></i>
+        </span>
+
+        <!-- Search input fills width -->
+        <input type="text" 
+               class="form-control" 
+               placeholder="Search hospitals by name, address, or network..."
+               [(ngModel)]="searchHospital" 
+               (input)="searchHospitals()">
+
+        <!-- Filter Buttons with spacing -->
+        <button class="btn btn-outline-primary ms-2" 
+                [ngClass]="networkButtonClass" 
+                (click)="filterNetworkHospitals()">
+          Network Only
+        </button>
+
+        <button class="btn btn-outline-secondary ms-2" 
+                [ngClass]="ratingButtonClass" 
+                (click)="onRatingButtonPressed()">
+          Rating
+        </button>
+
+        <button class="btn btn-outline-dark ms-2" (click)="onAscendingButtonPressed()">
+          <i class="fas fa-sort-up"></i>
+        </button>
+
+        <button class="btn btn-outline-dark ms-2" (click)="onDescendingButtonPressed()">
+          <i class="fas fa-sort-down"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Hospital Form -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">{{ editMode ? 'Edit Hospital' : 'Add Hospital' }}</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="hospitalForm">
+        <div class="row g-3 align-items-center">
+          <div class="col-md-3">
+            <input type="text" class="form-control" formControlName="name" placeholder="Hospital Name">
+            @if(hospitalForm.get('name')?.touched && hospitalForm.get('name')?.invalid){
+              <div class="text-danger small mt-1">
+                @if(hospitalForm.get('name')?.errors?.['required']) { Hospital name is required. }
+                @if(hospitalForm.get('name')?.errors?.['alphabetsOnly']) { Only alphabets are allowed in the name. }
+              </div>
+            }
+          </div>
+          <div class="col-md-2">
+            <input type="text" class="form-control" formControlName="clientContactNumber" placeholder="Phone No.">
+            @if(hospitalForm.get('clientContactNumber')?.touched && hospitalForm.get('clientContactNumber')?.invalid){
+              <div class="text-danger small mt-1">
+                @if(hospitalForm.get('clientContactNumber')?.errors?.['required']) { Phone number is required. }
+                @if(hospitalForm.get('clientContactNumber')?.errors?.['pattern']) { Phone number must be 10 digits numeric only. }
+              </div>
+            }
+          </div>
+          <div class="col-md-3">
+            <input type="email" class="form-control" formControlName="clientContactEmail" placeholder="Email Id">
+            @if(hospitalForm.get('clientContactEmail')?.touched && hospitalForm.get('clientContactEmail')?.invalid){
+              <div class="text-danger small mt-1">
+                @if(hospitalForm.get('clientContactEmail')?.errors?.['required']) { Email is required. }
+                @if(hospitalForm.get('clientContactEmail')?.errors?.['email']) { Enter a valid email. }
+              </div>
+            }
+          </div>
+          <div class="col-md-4">
+            <input type="text" class="form-control" formControlName="address" placeholder="Address">
+            @if(hospitalForm.get('address')?.touched && hospitalForm.get('address')?.invalid){
+              <div class="text-danger small mt-1">
+                @if(hospitalForm.get('address')?.errors?.['required']) { Address is required. }
+              </div>
+            }
+          </div>
+          <div class="col-md-3">
+            <input type="number" class="form-control" formControlName="rating" placeholder="Rating" min="0" max="5" step="0.1">
+            @if(hospitalForm.get('rating')?.touched && hospitalForm.get('rating')?.invalid){
+              <div class="text-danger small mt-1">
+                @if(hospitalForm.get('rating')?.errors?.['required']) { Rating is required. }
+                @if(hospitalForm.get('rating')?.errors?.['min']) { Rating must be at least 0. }
+                @if(hospitalForm.get('rating')?.errors?.['max']) { Rating must be at most 5. }
+              </div>
+            }
+          </div>
+          <div class="col-md-3">
+            <select class="form-select" formControlName="network">
+              <option [value]="1">Network</option>
+              <option [value]="0">Non-Network</option>
+            </select>
+            @if(hospitalForm.get('network')?.touched && hospitalForm.get('network')?.invalid){
+              <div class="text-danger small mt-1">
+                @if(hospitalForm.get('network')?.errors?.['required']) { Network selection is required. }
+              </div>
+            }
+          </div>
+        </div>
+        <div class="mt-3 text-end">
+          <button type="button" (click)="onHospitalFormSubmit()" class="btn btn-success me-2">
+            {{ editMode ? 'Update' : 'Add' }}
+          </button>
+          @if(editMode){
+            <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+          }
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Hospital Table -->
+  <div class="overflow-x-auto">
+    <table class="table table-bordered table-hover table-striped align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">S.No</th>
+          <th scope="col">Hospital Name</th>
+          <th scope="col">Phone No.</th>
+          <th scope="col">Email Id</th>
+          <th scope="col">Address</th>
+          <th scope="col">Rating</th>
+          <th scope="col">Network</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(item of filteredHospitalList; track $index){
+        <tr>
+          <td>{{$index+1}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.clientContactNumber}}</td>
+          <td>{{item.clientContactEmail}}</td>
+          <td>{{item.address}}</td>
+
+          <!-- Rating pill -->
+          <td class="text-center">
+            <span class="px-2 py-1 rounded"
+              [ngClass]="{
+                'bg-danger text-white fw-semibold': item.rating < 2,
+                'bg-warning text-white fw-semibold': item.rating >= 2 && item.rating < 4,
+                'bg-success text-white fw-semibold': item.rating >= 4
+              }">
+              {{ item.rating | number:'1.1-1' }}
+            </span>
+          </td>
+
+          <!-- Network tick/cross -->
+          <td class="text-center">
+            @if (item.network == 1) {
+              <span class="text-success fw-bold">✔</span>
+            }
+            @else if (item.network == 0) {
+              <span class="text-danger fw-bold">✖</span>
+            }
+          </td>
+
+          <td>
+            <button class="btn btn-sm btn-outline-primary" (click)="editHospital(item)">Edit</button>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-outline-danger" (click)="deleteHospital(item)">Delete</button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

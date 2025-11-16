@@ -1,0 +1,96 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<div class="card p-4 shadow-sm">
+
+  <!-- Search + Filters Row -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="input-group">
+
+        <!-- Search icon -->
+        <span class="input-group-text">
+          <i class="fas fa-search"></i>
+        </span>
+
+        <!-- Search input fills remaining width -->
+        <input type="text" 
+               class="form-control" 
+               placeholder="Search hospitals by name, address, or network..."
+               [(ngModel)]="searchHospital" 
+               (input)="searchHospitals()">
+
+        <!-- Filter Buttons with margin for spacing -->
+        <button class="btn btn-outline-primary ms-2" 
+                [ngClass]="networkButtonClass" 
+                (click)="filterNetworkHospitals()">
+          Network Only
+        </button>
+
+        <button class="btn btn-outline-secondary ms-2" 
+                [ngClass]="ratingButtonClass" 
+                (click)="onRatingButtonPressed()">
+          Rating
+        </button>
+
+        <button class="btn btn-outline-dark ms-2" (click)="onAscendingButtonPressed()">
+          <i class="fas fa-sort-up"></i>
+        </button>
+
+        <button class="btn btn-outline-dark ms-2" (click)="onDescendingButtonPressed()">
+          <i class="fas fa-sort-down"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hospital Table -->
+  <div class="overflow-x-auto">
+    <table class="table table-bordered table-hover table-striped align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">S.No</th>
+          <th scope="col">Hospital Name</th>
+          <th scope="col">Phone No.</th>
+          <th scope="col">Email Id</th>
+          <th scope="col">Address</th>
+          <th scope="col">Rating</th>
+          <th scope="col">Network</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(item of filteredHospitalList; track $index){
+        <tr>
+          <td>{{$index+1}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.clientContactNumber}}</td>
+          <td>{{item.clientContactEmail}}</td>
+          <td>{{item.address}}</td>
+
+          <!-- Rating centered, pill style -->
+          <td class="text-center">
+            <span 
+              class="px-2 py-1 rounded"
+              [ngClass]="{
+                'bg-danger text-white fw-semibold': item.rating < 2,
+                'bg-warning text-white fw-semibold': item.rating >= 2 && item.rating < 4,
+                'bg-success text-white fw-semibold': item.rating >= 4
+              }">
+              {{ item.rating | number:'1.1-1' }}
+            </span>
+          </td>
+
+          <!-- Network tick/cross -->
+          <td class="text-center">
+            @if (item.network == 1) {
+              <span class="text-success fw-bold">✔</span>
+            }
+            @else if (item.network == 0) {
+              <span class="text-danger fw-bold">✖</span>
+            }
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

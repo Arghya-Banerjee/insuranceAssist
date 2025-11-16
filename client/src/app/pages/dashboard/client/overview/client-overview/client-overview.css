@@ -1,0 +1,63 @@
+/* Theme tokens */
+:root {
+  --ia-primary: #3b82f6;     /* blue-500 */
+  --ia-surface: #ffffff;
+  --ia-muted: #6b7280;       /* gray-500 */
+  --ia-border: #e5e7eb;      /* gray-200 */
+  --ia-shadow: 0 10px 25px rgba(0,0,0,.07);
+  --ia-radius: 1rem;         /* rounded-4-ish */
+}
+
+/* Header */
+.ia-header { display:block; }
+
+/* Tabs */
+.ia-tabs { border-bottom: 1px solid var(--ia-border); }
+.ia-tab-item { margin-right: .25rem; }
+.ia-tab-link {
+  font-weight: 600;
+  border: 0 !important;
+  padding: .75rem 1rem;
+  color: var(--ia-muted);
+}
+.ia-tab-link.active {
+  color: var(--ia-primary) !important;
+  border-bottom: 3px solid var(--ia-primary) !important;
+  background: transparent !important;
+}
+.ia-tab-link:hover { color: var(--ia-primary); }
+
+/* Cards */
+.ia-card {
+  background: var(--ia-surface);
+  border-radius: var(--ia-radius);
+  box-shadow: var(--ia-shadow);
+  border: 1px solid var(--ia-border);
+}
+.ia-card-body { padding: 1.25rem 1.5rem; }
+
+/* Sections & text */
+.ia-section-title { color: var(--ia-primary) !important; }
+.ia-client-name { letter-spacing: .2px; }
+.ia-client-username { color: var(--ia-muted) !important; }
+
+/* Lists */
+.ia-info-list { margin: 0; }
+.ia-info-item { line-height: 1.5; }
+
+/* Avatar */
+.ia-avatar-wrap { }
+.ia-avatar { transition: transform .2s ease; }
+.ia-avatar:hover { transform: scale(1.02); }
+
+/* Progress */
+.ia-progress {
+  background: #f3f4f6;               /* gray-100 */
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--ia-border);
+}
+.ia-progress-bar {
+  font-weight: 600;
+  letter-spacing: .3px;
+}

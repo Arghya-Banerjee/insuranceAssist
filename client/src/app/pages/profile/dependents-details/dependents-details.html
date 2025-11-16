@@ -1,0 +1,179 @@
+<div class="dependents-list">
+  <div class="dependent-card" *ngFor="let dep of dependents; let i = index">
+    <form #depForm="ngForm" (ngSubmit)="save(dep)" novalidate>
+      <div class="dependent-grid">
+        <!-- Name (min length validation) -->
+        <div class="detail-item">
+          <label>Name:</label>
+          <span *ngIf="!dep.editing">{{ dep.name }}</span>
+          <div *ngIf="dep.editing">
+            <input
+              [(ngModel)]="dep.temp!.name"
+              name="name_{{ i }}"
+              required
+              minlength="2"
+              #nameModel="ngModel"
+              placeholder="Enter name"
+            />
+            <div class="error" *ngIf="nameModel.invalid && (nameModel.dirty || nameModel.touched)">
+              <small *ngIf="nameModel.errors?.['required']">Name is required.</small>
+              <small *ngIf="nameModel.errors?.['minlength']">Minimum 2 characters.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- DOB: date input when editing -->
+        <div class="detail-item">
+          <label>DOB:</label>
+          <span *ngIf="!dep.editing">{{ dep.dob }}</span>
+          <input
+            *ngIf="dep.editing"
+            type="date"
+            [(ngModel)]="dep.temp!.dob"
+            name="dob_{{ i }}"
+          />
+        </div>
+
+        <!-- Phone: exactly 10 digits -->
+        <div class="detail-item">
+          <label>Contact:</label>
+          <span *ngIf="!dep.editing">{{ dep.phone }}</span>
+          <div *ngIf="dep.editing">
+            <input
+              type="tel"
+              [(ngModel)]="dep.temp!.phone"
+              name="phone_{{ i }}"
+              required
+              pattern="^[0-9]{10}$"
+              maxlength="10"
+              #phoneModel="ngModel"
+              placeholder="10-digit phone"
+            />
+            <div class="error" *ngIf="phoneModel.invalid && (phoneModel.dirty || phoneModel.touched)">
+              <small *ngIf="phoneModel.errors?.['required']">Phone is required.</small>
+              <small *ngIf="phoneModel.errors?.['pattern']">Phone must be exactly 10 digits.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Address: min length -->
+        <div class="detail-item">
+          <label>Address:</label>
+          <span *ngIf="!dep.editing">{{ dep.address }}</span>
+          <div *ngIf="dep.editing">
+            <input
+              [(ngModel)]="dep.temp!.address"
+              name="address_{{ i }}"
+              required
+              minlength="5"
+              #addrModel="ngModel"
+              placeholder="Enter address"
+            />
+            <div class="error" *ngIf="addrModel.invalid && (addrModel.dirty || addrModel.touched)">
+              <small *ngIf="addrModel.errors?.['required']">Address is required.</small>
+              <small *ngIf="addrModel.errors?.['minlength']">Minimum 5 characters.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Relation (unchanged behavior) -->
+        <div class="detail-item">
+          <label>Relation:</label>
+          <ng-container *ngIf="dep.editing && dep.isNew; else showRelation">
+            <select [(ngModel)]="dep.temp!.relationName" name="relation_{{ i }}">
+              <option value="" disabled selected>Select relation</option>
+              <option *ngFor="let option of relationOptions" [value]="option.value">
+                {{ option.label }}
+              </option>
+            </select>
+          </ng-container>
+          <ng-template #showRelation>
+            <span>{{ dep.relationName }}</span>
+          </ng-template>
+        </div>
+
+        <!-- Gender: dropdown only when adding a NEW dependent; otherwise keep as-is -->
+        <div class="detail-item">
+          <label>Gender:</label>
+          <span *ngIf="!dep.editing">{{ dep.gender }}</span>
+
+          <!-- NEW dependent: dropdown M/F -->
+          <div *ngIf="dep.editing">
+            <select [(ngModel)]="dep.temp!.gender" name="gender_{{ i }}">
+              <option value="" disabled selected>Select gender</option>
+              <option value="M">M</option>
+              <option value="F">F</option>
+            </select>
+          </div>
+
+          <!-- Existing dependent: leave as a simple input when editing (per your earlier setup) -->
+          <!-- <input
+            *ngIf="dep.editing && !dep.isNew"
+            [(ngModel)]="dep.temp!.gender"
+            name="gender_{{ i }}"
+          /> -->
+        </div>
+
+        <!-- Email: standard email validation -->
+        <div class="detail-item">
+          <label>Email:</label>
+          <span *ngIf="!dep.editing">{{ dep.email }}</span>
+          <div *ngIf="dep.editing">
+            <input
+              type="email"
+              [(ngModel)]="dep.temp!.email"
+              name="email_{{ i }}"
+              required
+              #emailModel="ngModel"
+              placeholder="name@example.com"
+            />
+            <div class="error" *ngIf="emailModel.invalid && (emailModel.dirty || emailModel.touched)">
+              <small *ngIf="emailModel.errors?.['required']">Email is required.</small>
+              <small *ngIf="emailModel.errors?.['email']">Enter a valid email address.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TS-side summary errors -->
+      <div class="error-list" *ngIf="dep.validationErrors?.length">
+        <div class="error" *ngFor="let e of dep.validationErrors">{{ e }}</div>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions" style="display: flex; justify-content: space-between;">
+        <div>
+          <button *ngIf="!dep.editing" type="button" (click)="edit(dep)" class="blue-btn">Edit</button>
+
+          <button
+            *ngIf="dep.editing"
+            type="submit"
+            class="blue-btn"
+            [disabled]="depForm.invalid"
+            title="Fix validation errors to enable save"
+          >
+            Save
+          </button>
+
+          <button *ngIf="dep.editing" type="button" (click)="cancel(dep)" class="cancel-btn">Cancel</button>
+        </div>
+
+        <button *ngIf="!dep.editing" type="button" (click)="delete(dep)" class="blue-btn">Delete</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="add-btn-container">
+  <button
+    class="blue-btn"
+    (click)="addDependent()"
+    [disabled]="!canAddDependent()"
+    title="Maximum of 4 dependents allowed"
+  >
+    Add Dependent
+  </button>
+  <div class="small-note" *ngIf="!canAddDependent()">
+    You’ve reached the maximum of {{ maxDependents }} dependents.
+  </div>
+</div>

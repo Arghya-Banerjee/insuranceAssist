@@ -1,0 +1,63 @@
+.personal-details {
+  width: 100%;
+  font-size: 16px;
+}
+.personal-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 32px;
+  width: 100%;
+  margin-bottom: 18px;
+}
+.detail-item {
+  display: flex;
+  align-items: center;
+}
+.detail-item span,
+.detail-item input {
+  font-size: 1rem;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+label {
+  font-weight: 500;
+  color: #1976d2;
+  margin-right: 8px;
+  min-width: 90px;
+}
+input {
+  border: 1px solid #e3eafc;
+  border-radius: 6px;
+  padding: 4px 8px;
+  margin-left: 4px;
+  width: 70%;
+}
+.actions {
+  margin-top: 18px;
+}
+.blue-btn {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 18px;
+  margin-right: 8px;
+  cursor: pointer;
+}
+.cancel-btn {
+  background: #e3eafc;
+  color: #1976d2;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 18px;
+  cursor: pointer;
+}
+
+.error {
+  color: #b00020;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.error-list .error {
+  margin: 2px 0;
+}

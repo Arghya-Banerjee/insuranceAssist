@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="profile-container">
+      <button class="close-btn" (click)="goBack()" aria-label="Close">&times;</button>
+      <aside class="sidebar">
+        <img src="default-profile-pic.png" alt="Profile Picture" class="profile-pic" />
+        <nav>
+          <ul>
+            <li [class.active]="activeTab==='personal'" (click)="activeTab='personal'">Personal Details</li>
+            <li [class.active]="activeTab==='policy'" (click)="activeTab='policy'">Policy Details</li>
+            <li [class.active]="activeTab==='dependents'" (click)="activeTab='dependents'">Dependents Details</li>
+          </ul>
+        </nav>
+      </aside>
+      <section class="main-section">
+        <div class="profile-title">
+          <ng-container *ngIf="activeTab==='personal'">Personal Details</ng-container>
+          <ng-container *ngIf="activeTab==='policy'">Policy Details</ng-container>
+          <ng-container *ngIf="activeTab==='dependents'">Dependents Details</ng-container>
+        </div>
+        <main class="tab-content">
+          <ng-container *ngIf="activeTab==='personal'">
+            <app-personal-details></app-personal-details>
+          </ng-container>
+          <ng-container *ngIf="activeTab==='policy'">
+            <app-policy-details></app-policy-details>
+          </ng-container>
+          <ng-container *ngIf="activeTab==='dependents'">
+            <app-dependents-details></app-dependents-details>
+          </ng-container>
+        </main>
+      </section>
+    </div>
+</body>
+</html>

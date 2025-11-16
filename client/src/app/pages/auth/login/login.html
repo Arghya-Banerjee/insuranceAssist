@@ -1,0 +1,74 @@
+<!-- Title (optional) -->
+<h2 class="text-2xl font-semibold text-[#F0F9FF] mb-6">
+  Sign in to your account
+</h2>
+
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="space-y-5">
+
+<!-- Role (improved contrast) -->
+  <div class="relative">
+    <label for="role" class="block text-sm font-medium text-[#F0F9FF]/80 mb-1">
+      Login As
+    </label>
+
+    <div class="relative">
+      <select
+        id="role"
+        formControlName="role"
+        class="w-full px-4 py-3 rounded-lg bg-[#1F2937]/40 border border-white/10 text-[#F0F9FF] 
+              focus:border-[#3B82F6] focus:ring-2 focus:ring-[#2563EB]/40 outline-none transition 
+              appearance-none pr-10"
+        aria-label="Login As"
+      >
+        <option value="" disabled class="bg-[#F0F9FF] text-[#1F2937]">Select role</option>
+        <option value="agent" class="bg-[#F0F9FF] text-[#1F2937]">Agent</option>
+        <option value="client" class="bg-[#F0F9FF] text-[#1F2937]">Client</option>
+      </select>
+
+      <!-- Chevron icon -->
+      <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#F0F9FF]/70"
+          viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Username -->
+  <div>
+    <label for="username" class="block text-sm font-medium text-[#F0F9FF]/80 mb-1">
+      Username
+    </label>
+
+    <input
+      id="username"
+      type="text"
+      formControlName="username"
+      placeholder="Enter username"
+      class="w-full px-4 py-3 rounded-lg bg-[#1F2937]/40 border border-white/10 text-[#F0F9FF] placeholder-[#F0F9FF]/40
+             focus:border-[#3B82F6] focus:ring-2 focus:ring-[#2563EB]/40 outline-none transition">
+  </div>
+
+  <!-- Password -->
+  <div>
+    <label for="password" class="block text-sm font-medium text-[#F0F9FF]/80 mb-1">
+      Password
+    </label>
+
+    <input
+      id="password"
+      type="password"
+      formControlName="password"
+      placeholder="Enter password"
+      class="w-full px-4 py-3 rounded-lg bg-[#1F2937]/40 border border-white/10 text-[#F0F9FF] placeholder-[#F0F9FF]/40
+             focus:border-[#3B82F6] focus:ring-2 focus:ring-[#2563EB]/40 outline-none transition">
+  </div>
+
+  <!-- Submit Btn -->
+  <button
+    type="submit"
+    id="login-btn"
+    class="w-full py-3 mt-3 rounded-lg font-semibold bg-[#2563EB] hover:bg-[#3B82F6] text-white transition shadow-md">
+    Sign In
+  </button>
+
+</form>

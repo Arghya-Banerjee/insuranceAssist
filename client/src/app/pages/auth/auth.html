@@ -1,0 +1,193 @@
+<div class="min-h-screen bg-[#1F2937] text-[#F0F9FF] flex flex-col">
+
+  <!-- NAVBAR -->
+  <nav class="w-full bg-[#1F2937]/90 backdrop-blur border-b border-white/10 shadow-lg">
+    <div class="max-w-[1200px] mx-auto px-6 py-4 flex items-center justify-between">
+
+      <!-- Brand -->
+      <a class="flex items-center gap-3" href="#">
+        <img src="logo.png" alt="Logo" class="w-11 h-11 rounded-full shadow">
+        <span class="text-xl font-semibold tracking-wide text-[#F0F9FF]">Insurance Assist</span>
+      </a>
+
+      <!-- Nav Buttons -->
+      <div class="flex items-center gap-3">
+
+        <a href="#about"
+           class="px-4 py-2 rounded-md text-sm text-[#F0F9FF]/70 hover:text-[#F0F9FF] hover:bg-[#2563EB]/20 transition">
+          About Us
+        </a>
+
+        <a href="#contact"
+           class="px-4 py-2 rounded-md text-sm text-[#F0F9FF]/70 hover:text-[#F0F9FF] hover:bg-[#2563EB]/20 transition">
+          Contact Us
+        </a>
+
+        <!-- Dynamic Login/Register -->
+        @if(selectedTab==='login'){
+          <button (click)="selectTab('register')"
+            class="px-5 py-2 rounded-md text-sm font-semibold bg-[#2563EB] hover:bg-[#3B82F6] transition">
+            Register
+          </button>
+        }
+        @else {
+          <button (click)="selectTab('login')"
+            class="px-5 py-2 rounded-md text-sm font-semibold bg-[#2563EB] hover:bg-[#3B82F6] transition">
+            Login
+          </button>
+        }
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN AUTH SECTION -->
+  <div class="flex-grow flex justify-center items-center py-12 px-4">
+    <div class="w-full max-w-5xl bg-[#1F2937]/70 border border-white/10 backdrop-blur-lg shadow-xl rounded-xl p-10 
+                grid grid-cols-1 md:grid-cols-2 gap-10">
+
+      <!-- LEFT SECTION (Marketing) -->
+      <div class="flex flex-col justify-center">
+        
+        <div class="px-4 py-2 bg-[#2563EB]/20 text-[#3B82F6] rounded-full w-max mb-5 font-semibold">
+          Secure. Reliable. Trusted.
+        </div>
+
+        <h1 class="text-3xl font-bold text-[#F0F9FF] leading-tight mb-4">
+          Welcome to Insurance Assist
+        </h1>
+
+        <p class="text-[#F0F9FF]/70 leading-relaxed">
+          Manage claims, documents and policies effortlessly with a fast, secure and modern platform.
+        </p>
+
+        <div class="flex gap-3 mt-6 flex-wrap">
+          <span class="px-4 py-2 rounded-lg bg-[#2563EB]/15 text-sm text-[#F0F9FF]/80">
+            Encrypted Storage
+          </span>
+          <span class="px-4 py-2 rounded-lg bg-[#2563EB]/15 text-sm text-[#F0F9FF]/80">
+            Fast Claims
+          </span>
+          <span class="px-4 py-2 rounded-lg bg-[#2563EB]/15 text-sm text-[#F0F9FF]/80">
+            24/7 Support
+          </span>
+        </div>
+      </div>
+
+      <!-- RIGHT SECTION (Login/Register Component) -->
+      <div class="bg-[#1F2937]/60 border border-white/10 rounded-xl p-6 backdrop-blur">
+        @if (selectedTab === 'login') {
+          <app-login></app-login>
+        }
+        @else if (selectedTab === 'register') {
+          <app-signup></app-signup>
+        }
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto bg-gradient-to-t from-[#1F2937]/80 to-[#1F2937]/60 border-t border-white/6">
+    <div class="max-w-[1100px] mx-auto px-6 py-10">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+
+        <!-- Brand & short -->
+        <div class="space-y-3">
+          <div class="flex items-center gap-3">
+            <img src="logo.png" alt="Insurance Assist logo" class="w-10 h-10 rounded-full border border-white/6" />
+            <div>
+              <div class="text-lg font-semibold text-[#F0F9FF]">Insurance Assist</div>
+              <div class="text-sm text-[#F0F9FF]/70">Secure claims & policy management</div>
+            </div>
+          </div>
+
+          <p class="text-sm text-[#F0F9FF]/60">
+            Built for agents and clients — secure, fast, and reliable. Need help? Reach out via the contact links.
+          </p>
+
+          <div class="flex items-center gap-3 mt-2">
+            <a aria-label="Facebook" href="#" class="p-2 rounded-md hover:bg-[#2563EB]/12 transition">
+              <i class="bi bi-facebook text-[#F0F9FF]/80"></i>
+            </a>
+            <a aria-label="Twitter" href="#" class="p-2 rounded-md hover:bg-[#2563EB]/12 transition">
+              <i class="bi bi-twitter text-[#F0F9FF]/80"></i>
+            </a>
+            <a aria-label="LinkedIn" href="#" class="p-2 rounded-md hover:bg-[#2563EB]/12 transition">
+              <i class="bi bi-linkedin text-[#F0F9FF]/80"></i>
+            </a>
+            <a aria-label="Instagram" href="#" class="p-2 rounded-md hover:bg-[#2563EB]/12 transition">
+              <i class="bi bi-instagram text-[#F0F9FF]/80"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick links -->
+        <div>
+          <h4 class="text-sm font-semibold text-[#F0F9FF] mb-3">Quick links</h4>
+          <ul class="space-y-2 text-sm text-[#F0F9FF]/70">
+            <li><a href="#about" class="hover:text-[#F0F9FF] transition">About Us</a></li>
+            <li><a href="#contact" class="hover:text-[#F0F9FF] transition">Contact Us</a></li>
+            <li><a routerLink="/privacy-policy" class="hover:text-[#F0F9FF] transition">Privacy Policy</a></li>
+            <li><a href="/help" class="hover:text-[#F0F9FF] transition">Help Center</a></li>
+          </ul>
+        </div>
+
+        <!-- Resources / sitemap -->
+        <div>
+          <h4 class="text-sm font-semibold text-[#F0F9FF] mb-3">Resources</h4>
+          <ul class="space-y-2 text-sm text-[#F0F9FF]/70">
+            <li><a href="/docs" class="hover:text-[#F0F9FF] transition">Documentation</a></li>
+            <li><a href="/api" class="hover:text-[#F0F9FF] transition">API</a></li>
+            <li><a href="/status" class="hover:text-[#F0F9FF] transition">System Status</a></li>
+            <li><a href="/blog" class="hover:text-[#F0F9FF] transition">Blog</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact / Newsletter -->
+        <div class="space-y-3">
+          <h4 class="text-sm font-semibold text-[#F0F9FF] mb-1">Stay updated</h4>
+          <p class="text-sm text-[#F0F9FF]/70">Join our newsletter for product updates & tips.</p>
+
+          <!-- newsletter form (keeps Angular reactive or normal — adapt to your component) -->
+          <form (submit)="$event.preventDefault()" class="flex gap-2 mt-3">
+            <label for="footer-email" class="sr-only">Email</label>
+            <input id="footer-email" type="email" placeholder="Your email"
+                  class="flex-1 px-4 py-2 rounded-lg bg-[#1F2937]/50 border border-white/8 text-[#F0F9FF] placeholder-[#F0F9FF]/50
+                          focus:ring-2 focus:ring-[#2563EB]/30 outline-none transition" />
+
+            <button class="px-4 py-2 rounded-lg bg-[#2563EB] hover:bg-[#3B82F6] text-[#F0F9FF] font-semibold transition">
+              Subscribe
+            </button>
+          </form>
+
+          <div class="pt-3 border-t border-white/6">
+            <div class="text-sm text-[#F0F9FF]/70">Support</div>
+            <a href="mailto:support@insurance-assist.example" class="block text-sm text-[#F0F9FF]/80 hover:text-[#F0F9FF] transition">
+              support@insurance-assist.example
+            </a>
+            <a href="tel:+911234567890" class="block text-sm text-[#F0F9FF]/80 hover:text-[#F0F9FF] transition mt-1">
+              +91 12 3456 7890
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- bottom line -->
+      <div class="mt-8 pt-6 border-t border-white/6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="text-sm text-[#F0F9FF]/60">
+          © 2025 Insurance Assist. All rights reserved.
+        </div>
+
+        <div class="flex items-center gap-4 text-sm text-[#F0F9FF]/60">
+          <a href="/terms" class="hover:text-[#F0F9FF] transition">Terms</a>
+          <a href="/security" class="hover:text-[#F0F9FF] transition">Security</a>
+          <a href="/sitemap" class="hover:text-[#F0F9FF] transition">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,120 @@
+<div class="container mt-4 p-4 rounded-lg shadow-lg bg-white">
+  <!-- Title -->
+  <h3 class="text-xl font-semibold mb-4 text-gray-800">Claim History</h3>
+
+  <!-- Filters Row -->
+  <div class="mb-3 d-flex justify-content-between flex-wrap align-items-center gap-2">
+
+    <!-- Status Filters -->
+    <div class="d-flex flex-wrap gap-2">
+      <button id="created-filter-btn" class="btn"
+              [ngClass]="activeStatusList.includes('CREATED') ? 'btn-primary text-white' : 'btn-outline-primary'"
+              (click)="filterByStatus('CREATED')">Created</button>
+
+      <button id="reviewed-filter-btn" class="btn"
+              [ngClass]="activeStatusList.includes('IN REVIEW') ? 'btn-warning text-white' : 'btn-outline-warning'"
+              (click)="filterByStatus('IN REVIEW')">In Review</button>
+
+      <button id="approved-filter-btn" class="btn"
+              [ngClass]="activeStatusList.includes('APPROVED') ? 'btn-success text-white' : 'btn-outline-success'"
+              (click)="filterByStatus('APPROVED')">Approved</button>
+
+      <button id="rejected-filter-btn" class="btn"
+              [ngClass]="activeStatusList.includes('REJECTED') ? 'btn-danger text-white' : 'btn-outline-danger'"
+              (click)="filterByStatus('REJECTED')">Rejected</button>
+    </div>
+
+    <!-- Claim Type Filters -->
+    <div class="d-flex flex-wrap gap-2">
+      <button id="pre-filter-btn" class="btn" 
+              [ngClass]="activeTypeList.includes('PRE') ? 'btn-warning text-dark' : 'btn-outline-warning'" 
+              (click)="filterByType('PRE')">PRE</button>
+      <button id="post-filter-btn" class="btn" 
+              [ngClass]="activeTypeList.includes('POST') ? 'btn-info text-dark' : 'btn-outline-info'" 
+              (click)="filterByType('POST')">POST</button>
+    </div>
+
+    <!-- Date Range Filter -->
+    <div class="d-flex align-items-center gap-2">
+    <label class="fw-semibold">From:</label>
+    <input id="start-date" type="date" [(ngModel)]="filterStartDate" (change)="applyFilters()" 
+            class="form-control form-control-sm" style="width:auto;"
+            [attr.max]="today">
+    <label class="fw-semibold">To:</label>
+    <input id="end-date" type="date" [(ngModel)]="filterEndDate" (change)="applyFilters()" 
+            class="form-control form-control-sm" style="width:auto;" 
+            [attr.max]="today" [attr.min]="filterStartDate" [disabled]="!filterStartDate">
+    </div>
+
+    <!-- Clear Filters -->
+    <div>
+      <button id="clear-filter-btn" class="btn btn-sm btn-outline-danger" (click)="resetFilters()" title="Clear Filters">✖</button>
+    </div>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="mb-3">
+    <input id="search-filter" type="text"
+           [(ngModel)]="filterSearchTerm"
+           placeholder="Search claims..."
+           class="form-control"
+           (input)="applyFilters()">
+  </div>
+
+  <!-- Table -->
+  @if (!result) {
+    <div class="alert alert-info rounded shadow-sm">
+      No claims loaded yet.
+    </div>
+  }
+  @else {
+    <div class="overflow-x-auto">
+      <table id="claim-history-table" class="table table-bordered table-hover table-striped align-middle">
+        <thead id="claim-history-table-header" class="table-dark">
+          <tr>
+            <th scope="col">Open Date</th>
+            <th scope="col">Procedure Notes</th>
+            <th class="text-center" scope="col">Claim Type</th>
+            <th class="text-center" scope="col">Status</th>
+            <th scope="col">Claim Amount</th>
+          </tr>
+        </thead>
+        <tbody id="claim-history-table-body">
+          @if(result.length === 0){
+              <tr>
+              <td colspan="5" class="text-center text-muted">
+                  No claims found
+              </td>
+              </tr>
+          }
+          @for(claim of result; track $index){
+              <tr>
+              <td>{{claim.openDate | date:'dd MMMM yyyy'}}</td>
+              <td>{{claim.procedureNotes}}</td>
+              <td class="text-center">
+                  <span class="badge"
+                  [ngClass]="{
+                      'bg-warning': claim.claimType === 'PRE',
+                      'bg-info': claim.claimType === 'POST'
+                  }">
+                  {{ claim.claimType }}
+                  </span>
+              </td>
+              <td class="text-center">
+                  <span class="badge" [ngClass]="{
+                  'bg-success': claim.status === 'APPROVED',
+                  'bg-primary': claim.status === 'CREATED',
+                  'bg-danger': claim.status === 'REJECTED',
+                  'bg-warning': claim.status === 'IN REVIEW'
+                  }">
+                  {{claim.status}}
+                  </span>
+              </td>
+              <td>Rs.{{claim.claimAmount}}</td>
+              </tr>
+          }
+      </tbody>
+      </table>
+    </div>
+  }
+</div>

@@ -1,0 +1,39 @@
+<header id="ia-client-header" class="ia-header">
+  <title>Insurance Assist - Client Dashboard</title>
+</header>
+
+<ul id="ia-client-tabs" class="nav nav-tabs mb-4 ia-tabs">
+  <li id="ia-tab-overview" class="nav-item ia-tab-item">
+    <a id="ia-tab-overview-link"
+       class="nav-link ia-tab-link"
+       [class.active]="activeTab === 'overview'"
+       style="cursor:pointer"
+       (click)="setTab('overview')">Overview</a>
+  </li>
+  <li id="ia-tab-new-claim" class="nav-item ia-tab-item">
+    <a id="ia-tab-new-claim-link"
+       class="nav-link ia-tab-link"
+       [class.active]="activeTab === 'new-claim'"
+       style="cursor:pointer"
+       (click)="setTab('new-claim')">New Claim</a>
+  </li>
+  <li id="ia-tab-history" class="nav-item ia-tab-item">
+    <a id="ia-tab-history-link"
+       class="nav-link ia-tab-link"
+       [class.active]="activeTab === 'history'"
+       style="cursor:pointer"
+       (click)="setTab('history')">Claim History</a>
+  </li>
+  <li id="ia-tab-hospitals" class="nav-item ia-tab-item">
+    <a id="ia-tab-hospitals-link"
+       class="nav-link ia-tab-link"
+       [class.active]="activeTab === 'hospitals'"
+       style="cursor:pointer"
+       (click)="setTab('hospitals')">Network Hospitals</a>
+  </li>
+</ul>
+
+@if (activeTab === 'overview') {<app-client-overview id="ia-pane-overview" class="ia-tab-pane"></app-client-overview>}
+@else if (activeTab === 'new-claim') {<app-client-new-claim id="ia-pane-new-claim" class="ia-tab-pane"></app-client-new-claim>}
+@else if (activeTab === 'hospitals') {<app-network-hospitals id="ia-pane-hospitals" class="ia-tab-pane"></app-network-hospitals>}
+@else if (activeTab === 'history') {<app-client-claim-history id="ia-pane-history" class="ia-tab-pane"></app-client-claim-history>}

@@ -1,0 +1,99 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container mt-4 p-4 rounded-lg shadow-lg bg-white">
+    <h3 class="mb-3">Claim Summary</h3>
+    <table class="table table-bordered table-hover table-striped align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Open Date</th>
+                <th>Procedure Notes</th>
+                <th>Claim Type</th>
+                <th>Status</th>
+                <th>Attachments</th>
+                <th>Claim Amount</th>
+                <th>Select Action</th>
+                <th>Confirm Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(claim of Claims; track $index){
+                <tr>
+                    <td>
+                        {{claim.openDate | date:'dd MMMM yyyy'}}
+                    </td>
+                    <td>
+                        {{claim.procedureNotes}}
+                    </td>
+                    <td class="text-center">
+                        <span class="badge bg-info">{{claim.claimType}}</span>
+                    </td>
+                    <td class="text-center"><span class="badge" [ngClass]="{
+                            'bg-success': claim.status === 'APPROVED',
+                            'bg-primary': claim.status === 'CREATED',
+                            'bg-danger': claim.status === 'REJECTED',
+                            'bg-warning': claim.status === 'IN REVIEW'
+                        }">
+                            {{claim.status}}
+                        </span>
+                    </td>
+
+                    
+                    <td>
+                        <button type="button" 
+                        (click)="onDownloadDocument(claim.claimId)" 
+                        class="btn btn-outline-primary">Download</button>
+                    </td>
+
+                     <td>@if(claim.claimType === 'PRE' && claim.selectedAction === '3') {
+                            <input type="number"
+                                class="form-control form-control-sm"
+                                    [(ngModel)]="claim.claimAmount"
+                                min="1"
+                                [ngClass]="{'is-invalid': claim.claimAmount == 0}" />
+                            @if(claim.claimAmount == 0) {
+                            <div class="text-danger small mt-1">reimbursement amount must be non-zero</div>
+                            }
+                        }
+                        @else {
+                            Rs.{{claim.claimAmount}}
+                        }
+                    </td>
+                    <td>
+                    <select [(ngModel)]="claim.selectedAction" class="form-select form-select-sm" placeholder="Select">
+                        @if (claim.status === 'CREATED') {
+                            <option value="" selected>Select Action</option>
+                            <option value="2">REVIEW</option>
+                            <option value="3">APPROVE</option>
+                            <option value="4">REJECT</option>
+                        }
+                        @else if(claim.status === 'IN REVIEW'){
+                            <option value="" selected>Select Action</option>
+                            <option value="3">APPROVE</option>
+                            <option value="4">REJECT</option>
+                        }
+                    </select>
+                    </td>
+
+                    <!-- <td>
+                        <button (click)="ConfirmAction(claim,actionSelect.value)"
+                        class="btn btn-primary btn-sm"
+                        [disabled]="claim.status === 'APPROVED' || claim.status === 'REJECTED'"   
+                        >Confirm
+                    </button>
+                    </td> -->
+
+
+                    <td>
+                        <button (click)="ConfirmAction(claim, claim.selectedAction)"
+                            class="btn btn-primary btn-sm"
+                            [disabled]="(claim.claimType === 'PRE' && claim.selectedAction === '3' && (!claim.claimAmount || claim.claimAmount == 0)) || claim.status === 'APPROVED' || claim.status === 'REJECTED'">
+                            Confirm
+                        </button>
+                    </td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

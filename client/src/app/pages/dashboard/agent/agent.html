@@ -1,0 +1,35 @@
+<header>
+  <title>Insurance Assist - Agent Dashboard</title>
+</header>
+
+<ul class="nav nav-tabs mb-4">
+  <li class="nav-item">
+    <a class="nav-link" id="overview-btn" [class.active] = "activeTab === 'overview'" style="cursor:pointer" (click) = "setTab('overview')">Overview</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="claim-approval-btn" [class.active] = "activeTab === 'claim-approval'" style="cursor:pointer" (click)="setTab('claim-approval')">Claim Approval</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="claim-history-btn" [class.active] = "activeTab === 'claim-history'" style="cursor:pointer" (click)="setTab('claim-history')">Claim History</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="network-hospital-btn" [class.active] = "activeTab === 'network-hospitals'" style="cursor:pointer" (click)="setTab('network-hospitals')">Network Hospitals</a>
+  </li>
+</ul>
+
+
+@if(activeTab === 'overview'){
+  <app-overview/> 
+}
+
+@if(activeTab === 'claim-approval'){
+  <app-claim-approval/>
+}
+
+@if(activeTab === 'claim-history'){
+  <app-claim-history/>
+}
+
+@if(activeTab === 'network-hospitals'){
+  <app-agent-network-hospitals/>
+}

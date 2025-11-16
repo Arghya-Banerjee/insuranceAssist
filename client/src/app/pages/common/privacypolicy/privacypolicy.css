@@ -1,0 +1,99 @@
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #007bff; /* Primary brand color: Blue */
+    font-size: 2.5em;
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #343a40; /* Darker secondary color */
+    font-size: 1.8em;
+    margin-top: 30px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+h3 {
+    color: #495057;
+    font-size: 1.4em;
+    margin-top: 25px;
+}
+
+h4 {
+    color: #495057;
+    font-size: 1.2em;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+ul {
+    list-style-type: disc;
+    margin: 15px 0 15px 20px;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+strong {
+    font-weight: 700;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Specific styles for definition list items */
+.definition-list > li > p:first-child strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #007bff;
+}
+
+/* Specific styles for data types list */
+.data-types-list li {
+    font-weight: 500;
+    color: #007bff;
+}
+
+/* Styling for the update date */
+.update-date {
+    font-style: italic;
+    color: #6c757d;
+    margin-bottom: 25px;
+    display: block;
+}
+
+/* Styling for bullet points under "Use of Your Personal Data" */
+.purpose-list strong {
+    color: #28a745; /* Green color to highlight the purpose */
+}

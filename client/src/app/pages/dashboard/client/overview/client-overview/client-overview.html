@@ -1,0 +1,82 @@
+<!-- overview.component.html -->
+<div id="ia-overview-container" class="container my-5 ia-container">
+
+  <!-- Profile box -->
+  <div id="ia-profile-card" class="card border-0 shadow-lg rounded-4 mb-4 ia-card">
+    <div class="card-body ia-card-body">
+      <div class="row align-items-center g-4 ia-profile-row">
+        <!-- Client details -->
+        <div id="ia-client-details" class="col-md-8 ia-client-col">
+          <h2 id="ia-client-name" class="fw-bold mb-1 ia-client-name">{{ clientDetails.name }}</h2>
+          <p id="ia-client-username" class="text-secondary mb-4 ia-client-username">@{{ clientDetails.username }}</p>
+
+          <h5 id="ia-personal-info-title" class="text-primary fw-semibold ia-section-title">Personal Information</h5>
+          <ul id="ia-personal-info-list" class="list-unstyled mt-3 mb-0 ia-info-list">
+            <li id="ia-field-gender" class="mb-2 ia-info-item"><strong>Gender:</strong> {{ clientDetails.gender === 'M' ? 'Male' : clientDetails.gender === 'F' ? 'Female' : 'N/A' }}</li>
+            <li id="ia-field-dob" class="mb-2 ia-info-item"><strong>Date of Birth:</strong> {{ clientDetails.dob | date:'longDate' }}</li>
+            <li id="ia-field-address" class="mb-2 ia-info-item"><strong>Address:</strong> {{ clientDetails.address }}</li>
+            <li id="ia-field-email" class="mb-2 ia-info-item"><strong>Email:</strong> {{ clientDetails.email }}</li>
+            <li id="ia-field-phone" class="mb-2 ia-info-item"><strong>Phone:</strong> {{ clientDetails.phone }}</li>
+          </ul>
+        </div>
+
+        <!-- Profile image -->
+        <div id="ia-profile-image-wrap" class="col-md-4 text-md-end text-center ia-avatar-wrap">
+          <img
+            id="ia-profile-image"
+            src="default-profile-pic.png"
+            alt="Profile photo"
+            class="rounded-circle border border-4 border-primary shadow-sm ia-avatar"
+            style="width: 160px; height: 160px; object-fit: cover;"
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Policy details box -->
+  <div id="ia-policy-card" class="card border-0 shadow-lg rounded-4 mb-4 ia-card">
+    <div class="card-body ia-card-body">
+      <h5 id="ia-current-policy-title" class="text-primary fw-semibold mb-3 ia-section-title">Current Policy</h5>
+      <ul id="ia-current-policy-list" class="list-unstyled mb-4 ia-info-list">
+        <li id="ia-policy-start" class="mb-2 ia-info-item"><strong>Start Date:</strong> {{ policyDetails.startDate | date:'longDate' }}</li>
+        <li id="ia-policy-end" class="mb-2 ia-info-item"><strong>End Date:</strong> {{ policyDetails.endDate | date:'longDate' }}</li>
+        <li id="ia-policy-premium" class="mb-2 ia-info-item"><strong>Premium:</strong> ₹{{ policyDetails.premium | number }}</li>
+        <li id="ia-policy-remaining" class="mb-2 ia-info-item"><strong>Remaining Coverage:</strong> ₹{{ policyDetails.remainingCoverage | number }}</li>
+        <li id="ia-policy-total" class="mb-2 ia-info-item"><strong>Total Coverage:</strong> ₹{{ policyTypeDetails.coverage | number }}</li>
+      </ul>
+
+      <!-- Coverage slider -->
+      <div id="ia-coverage-progress" class="progress ia-progress" style="height: 10px;">
+        <div
+          id="ia-coverage-bar"
+          class="progress-bar ia-progress-bar"
+          role="progressbar"
+          [style.width.%]="(policyDetails.remainingCoverage / policyTypeDetails.coverage) * 100"
+          [ngClass]="{
+            'bg-success': (policyDetails.remainingCoverage / policyTypeDetails.coverage) > 0.6,
+            'bg-warning': (policyDetails.remainingCoverage / policyTypeDetails.coverage) <= 0.6 && (policyDetails.remainingCoverage / policyTypeDetails.coverage) > 0.3,
+            'bg-danger': (policyDetails.remainingCoverage / policyTypeDetails.coverage) <= 0.3
+          }">
+          {{ ((policyDetails.remainingCoverage / policyTypeDetails.coverage) * 100) | number:'1.0-0' }}%
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Policy type details box -->
+  <div id="ia-policy-type-card" class="card border-0 shadow-lg rounded-4 ia-card">
+    <div class="card-body ia-card-body">
+      <h5 id="ia-policy-type-title" class="text-primary fw-semibold mb-3 ia-section-title">Policy Type Details</h5>
+      <ul id="ia-policy-type-list" class="list-unstyled ia-info-list">
+        <li id="ia-policy-tier" class="mb-2 ia-info-item"><strong>Tier:</strong> {{ policyTypeDetails.tier }}</li>
+        <li id="ia-policy-premium-base" class="mb-2 ia-info-item"><strong>Premium Base:</strong> ₹{{ policyTypeDetails.premiumBase | number }}</li>
+        <li id="ia-policy-premium-dep" class="mb-2 ia-info-item"><strong>Premium Per Dependent:</strong> ₹{{ policyTypeDetails.premiumPerDependent | number }}</li>
+        <li id="ia-policy-coverage" class="mb-2 ia-info-item"><strong>Coverage:</strong> ₹{{ policyTypeDetails.coverage | number }}</li>
+        <li id="ia-policy-deductible" class="mb-2 ia-info-item"><strong>Deductible:</strong> ₹{{ policyTypeDetails.deductible | number }}</li>
+        <li id="ia-policy-insurer-pay" class="mb-2 ia-info-item"><strong>Insurer Pay Percentage:</strong> {{ policyTypeDetails.insurerPayPercentage }}%</li>
+      </ul>
+    </div>
+  </div>
+
+</div>

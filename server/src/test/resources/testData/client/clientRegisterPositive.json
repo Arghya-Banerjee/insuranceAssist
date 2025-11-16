@@ -1,0 +1,11 @@
+[
+  {
+    "name": "Arjun Sharma",
+    "gender": "M",
+    "dob": "1995-06-15",
+    "phone": 9876543210,
+    "address": "Delhi, India",
+    "email": "arjun.sharma@test.com",
+    "password": "Pass@123"
+  }
+]
