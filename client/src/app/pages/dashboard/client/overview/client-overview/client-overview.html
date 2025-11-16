@@ -1,82 +1,164 @@
-<!-- overview.component.html -->
-<div id="ia-overview-container" class="container my-5 ia-container">
+<!-- overview.component.html (Tailwind dark theme, improved visuals) -->
+<div id="ia-overview-container" class="mx-auto mt-6 mb-0 px-4 max-w-5xl">
 
   <!-- Profile box -->
-  <div id="ia-profile-card" class="card border-0 shadow-lg rounded-4 mb-4 ia-card">
-    <div class="card-body ia-card-body">
-      <div class="row align-items-center g-4 ia-profile-row">
-        <!-- Client details -->
-        <div id="ia-client-details" class="col-md-8 ia-client-col">
-          <h2 id="ia-client-name" class="fw-bold mb-1 ia-client-name">{{ clientDetails.name }}</h2>
-          <p id="ia-client-username" class="text-secondary mb-4 ia-client-username">@{{ clientDetails.username }}</p>
+  <section id="ia-profile-card" class="mb-6 rounded-2xl bg-[#1F2937]/60 border border-white/6 shadow-lg ia-card">
+    <div class="p-6 ia-card-body">
+      <div class="flex flex-col md:flex-row items-center md:items-start gap-6 ia-profile-row">
 
-          <h5 id="ia-personal-info-title" class="text-primary fw-semibold ia-section-title">Personal Information</h5>
-          <ul id="ia-personal-info-list" class="list-unstyled mt-3 mb-0 ia-info-list">
-            <li id="ia-field-gender" class="mb-2 ia-info-item"><strong>Gender:</strong> {{ clientDetails.gender === 'M' ? 'Male' : clientDetails.gender === 'F' ? 'Female' : 'N/A' }}</li>
-            <li id="ia-field-dob" class="mb-2 ia-info-item"><strong>Date of Birth:</strong> {{ clientDetails.dob | date:'longDate' }}</li>
-            <li id="ia-field-address" class="mb-2 ia-info-item"><strong>Address:</strong> {{ clientDetails.address }}</li>
-            <li id="ia-field-email" class="mb-2 ia-info-item"><strong>Email:</strong> {{ clientDetails.email }}</li>
-            <li id="ia-field-phone" class="mb-2 ia-info-item"><strong>Phone:</strong> {{ clientDetails.phone }}</li>
+        <!-- Client details -->
+        <div id="ia-client-details" class="flex-1 ia-client-col">
+          <h2 id="ia-client-name" class="text-2xl font-bold text-[#F0F9FF] mb-1 ia-client-name">
+            {{ clientDetails?.name || '—' }}
+          </h2>
+          <p id="ia-client-username" class="text-[#F0F9FF]/60 mb-4 ia-client-username">
+            @{{ clientDetails?.username || 'user' }}
+          </p>
+
+          <h5 id="ia-personal-info-title" class="text-[#2563EB] font-semibold mb-2 ia-section-title">
+            Personal Information
+          </h5>
+
+          <ul id="ia-personal-info-list" class="mt-3 space-y-2 text-sm text-[#F0F9FF]/80 ia-info-list">
+            <li id="ia-field-gender" class="ia-info-item">
+              <strong class="text-[#F0F9FF]">Gender:</strong>
+              <span class="ml-2">
+                {{ clientDetails?.gender === 'M' ? 'Male' : (clientDetails?.gender === 'F' ? 'Female' : 'N/A') }}
+              </span>
+            </li>
+
+            <li id="ia-field-dob" class="ia-info-item">
+              <strong class="text-[#F0F9FF]">Date of Birth:</strong>
+              <span class="ml-2">{{ clientDetails?.dob ? (clientDetails.dob | date:'longDate') : '—' }}</span>
+            </li>
+
+            <li id="ia-field-address" class="ia-info-item">
+              <strong class="text-[#F0F9FF]">Address:</strong>
+              <span class="ml-2">{{ clientDetails?.address || '—' }}</span>
+            </li>
+
+            <li id="ia-field-email" class="ia-info-item">
+              <strong class="text-[#F0F9FF]">Email:</strong>
+              <span class="ml-2">{{ clientDetails?.email || '—' }}</span>
+            </li>
+
+            <li id="ia-field-phone" class="ia-info-item">
+              <strong class="text-[#F0F9FF]">Phone:</strong>
+              <span class="ml-2">{{ clientDetails?.phone || '—' }}</span>
+            </li>
           </ul>
         </div>
 
         <!-- Profile image -->
-        <div id="ia-profile-image-wrap" class="col-md-4 text-md-end text-center ia-avatar-wrap">
+        <div id="ia-profile-image-wrap" class="w-full md:w-44 flex justify-center md:justify-end ia-avatar-wrap">
           <img
             id="ia-profile-image"
             src="default-profile-pic.png"
             alt="Profile photo"
-            class="rounded-circle border border-4 border-primary shadow-sm ia-avatar"
-            style="width: 160px; height: 160px; object-fit: cover;"
-          >
+            class="rounded-full border-4 border-[#2563EB] shadow-sm object-cover"
+            style="width:160px;height:160px;object-fit:cover;"
+          />
         </div>
+
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- Policy details box -->
-  <div id="ia-policy-card" class="card border-0 shadow-lg rounded-4 mb-4 ia-card">
-    <div class="card-body ia-card-body">
-      <h5 id="ia-current-policy-title" class="text-primary fw-semibold mb-3 ia-section-title">Current Policy</h5>
-      <ul id="ia-current-policy-list" class="list-unstyled mb-4 ia-info-list">
-        <li id="ia-policy-start" class="mb-2 ia-info-item"><strong>Start Date:</strong> {{ policyDetails.startDate | date:'longDate' }}</li>
-        <li id="ia-policy-end" class="mb-2 ia-info-item"><strong>End Date:</strong> {{ policyDetails.endDate | date:'longDate' }}</li>
-        <li id="ia-policy-premium" class="mb-2 ia-info-item"><strong>Premium:</strong> ₹{{ policyDetails.premium | number }}</li>
-        <li id="ia-policy-remaining" class="mb-2 ia-info-item"><strong>Remaining Coverage:</strong> ₹{{ policyDetails.remainingCoverage | number }}</li>
-        <li id="ia-policy-total" class="mb-2 ia-info-item"><strong>Total Coverage:</strong> ₹{{ policyTypeDetails.coverage | number }}</li>
+  <section id="ia-policy-card" class="mb-6 rounded-2xl bg-[#1F2937]/60 border border-white/6 shadow-lg ia-card">
+    <div class="p-6 ia-card-body">
+      <h5 id="ia-current-policy-title" class="text-[#2563EB] font-semibold mb-3 ia-section-title">Current Policy</h5>
+
+      <ul id="ia-current-policy-list" class="mb-4 ia-info-list text-sm text-[#F0F9FF]/80 space-y-2">
+        <li id="ia-policy-start" class="ia-info-item">
+          <strong class="text-[#F0F9FF]">Start Date:</strong>
+          <span class="ml-2">{{ policyDetails?.startDate ? (policyDetails.startDate | date:'longDate') : '—' }}</span>
+        </li>
+
+        <li id="ia-policy-end" class="ia-info-item">
+          <strong class="text-[#F0F9FF]">End Date:</strong>
+          <span class="ml-2">{{ policyDetails?.endDate ? (policyDetails.endDate | date:'longDate') : '—' }}</span>
+        </li>
+
+        <li id="ia-policy-premium" class="ia-info-item">
+          <strong class="text-[#F0F9FF]">Premium:</strong>
+          <span class="ml-2">₹{{ policyDetails?.premium ?? '—' }}</span>
+        </li>
+
+        <li id="ia-policy-remaining" class="ia-info-item">
+          <strong class="text-[#F0F9FF]">Remaining Coverage:</strong>
+          <span class="ml-2">₹{{ policyDetails?.remainingCoverage ?? '—' }}</span>
+        </li>
+
+        <li id="ia-policy-total" class="ia-info-item">
+          <strong class="text-[#F0F9FF]">Total Coverage:</strong>
+          <span class="ml-2">₹{{ policyTypeDetails?.coverage ?? '—' }}</span>
+        </li>
       </ul>
 
       <!-- Coverage slider -->
-      <div id="ia-coverage-progress" class="progress ia-progress" style="height: 10px;">
+      <div id="ia-coverage-progress" class="w-full rounded-full bg-white/6 overflow-hidden" style="height:10px;">
         <div
           id="ia-coverage-bar"
-          class="progress-bar ia-progress-bar"
+          class="h-full"
           role="progressbar"
-          [style.width.%]="(policyDetails.remainingCoverage / policyTypeDetails.coverage) * 100"
-          [ngClass]="{
-            'bg-success': (policyDetails.remainingCoverage / policyTypeDetails.coverage) > 0.6,
-            'bg-warning': (policyDetails.remainingCoverage / policyTypeDetails.coverage) <= 0.6 && (policyDetails.remainingCoverage / policyTypeDetails.coverage) > 0.3,
-            'bg-danger': (policyDetails.remainingCoverage / policyTypeDetails.coverage) <= 0.3
-          }">
-          {{ ((policyDetails.remainingCoverage / policyTypeDetails.coverage) * 100) | number:'1.0-0' }}%
+          [style.width.%]="(policyDetails?.remainingCoverage != null && policyTypeDetails?.coverage) ? (policyDetails.remainingCoverage / policyTypeDetails.coverage) * 100 : 0"
+          [class]="
+            ((policyDetails?.remainingCoverage != null && policyTypeDetails?.coverage)
+              ? ((policyDetails.remainingCoverage / policyTypeDetails.coverage) > 0.6 ? 'bg-green-600' :
+                 ((policyDetails.remainingCoverage / policyTypeDetails.coverage) > 0.3 ? 'bg-yellow-500' : 'bg-red-600'))
+              : 'bg-white/10')
+          ">
         </div>
       </div>
+
+      <div class="mt-2 text-xs text-[#F0F9FF]/70">
+        {{
+          (policyDetails?.remainingCoverage != null && policyTypeDetails?.coverage)
+            ? (((policyDetails.remainingCoverage / policyTypeDetails.coverage) * 100) | number:'1.0-0') + '%'
+            : '—'
+        }}
+      </div>
     </div>
-  </div>
+  </section>
 
   <!-- Policy type details box -->
-  <div id="ia-policy-type-card" class="card border-0 shadow-lg rounded-4 ia-card">
-    <div class="card-body ia-card-body">
-      <h5 id="ia-policy-type-title" class="text-primary fw-semibold mb-3 ia-section-title">Policy Type Details</h5>
-      <ul id="ia-policy-type-list" class="list-unstyled ia-info-list">
-        <li id="ia-policy-tier" class="mb-2 ia-info-item"><strong>Tier:</strong> {{ policyTypeDetails.tier }}</li>
-        <li id="ia-policy-premium-base" class="mb-2 ia-info-item"><strong>Premium Base:</strong> ₹{{ policyTypeDetails.premiumBase | number }}</li>
-        <li id="ia-policy-premium-dep" class="mb-2 ia-info-item"><strong>Premium Per Dependent:</strong> ₹{{ policyTypeDetails.premiumPerDependent | number }}</li>
-        <li id="ia-policy-coverage" class="mb-2 ia-info-item"><strong>Coverage:</strong> ₹{{ policyTypeDetails.coverage | number }}</li>
-        <li id="ia-policy-deductible" class="mb-2 ia-info-item"><strong>Deductible:</strong> ₹{{ policyTypeDetails.deductible | number }}</li>
-        <li id="ia-policy-insurer-pay" class="mb-2 ia-info-item"><strong>Insurer Pay Percentage:</strong> {{ policyTypeDetails.insurerPayPercentage }}%</li>
+  <section id="ia-policy-type-card" class="rounded-2xl bg-[#1F2937]/60 border border-white/6 shadow-lg ia-card">
+    <div class="p-6 ia-card-body">
+      <h5 id="ia-policy-type-title" class="text-[#2563EB] font-semibold mb-3 ia-section-title">Policy Type Details</h5>
+
+      <ul id="ia-policy-type-list" class="ia-info-list text-sm text-[#F0F9FF]/80 space-y-2">
+        <li id="ia-policy-tier" class="ia-info-item">
+          <strong class="text-[#F0F9FF]">Tier:</strong>
+          <span class="ml-2">{{ policyTypeDetails?.tier || '—' }}</span>
+        </li>
+
+        <li id="ia-policy-premium-base" class="ia-info-item">
+          <strong class="text-[#F0F9FF]">Premium Base:</strong>
+          <span class="ml-2">₹{{ policyTypeDetails?.premiumBase ?? '—' }}</span>
+        </li>
+
+        <li id="ia-policy-premium-dep" class="ia-info-item">
+          <strong class="text-[#F0F9FF]">Premium Per Dependent:</strong>
+          <span class="ml-2">₹{{ policyTypeDetails?.premiumPerDependent ?? '—' }}</span>
+        </li>
+
+        <li id="ia-policy-coverage" class="ia-info-item">
+          <strong class="text-[#F0F9FF]">Coverage:</strong>
+          <span class="ml-2">₹{{ policyTypeDetails?.coverage ?? '—' }}</span>
+        </li>
+
+        <li id="ia-policy-deductible" class="ia-info-item">
+          <strong class="text-[#F0F9FF]">Deductible:</strong>
+          <span class="ml-2">₹{{ policyTypeDetails?.deductible ?? '—' }}</span>
+        </li>
+
+        <li id="ia-policy-insurer-pay" class="ia-info-item">
+          <strong class="text-[#F0F9FF]">Insurer Pay Percentage:</strong>
+          <span class="ml-2">{{ policyTypeDetails?.insurerPayPercentage ?? '—' }}%</span>
+        </li>
       </ul>
     </div>
-  </div>
+  </section>
 
 </div>

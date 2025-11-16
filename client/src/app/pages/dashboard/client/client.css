@@ -1,4 +1,0 @@
-/* Small helper: ensure the container uses your palette if Tailwind classes aren't available */
-:host {
-  display: block;
-}

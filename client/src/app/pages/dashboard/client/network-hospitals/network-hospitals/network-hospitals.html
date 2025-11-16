@@ -1,94 +1,134 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<div class="card p-4 shadow-sm">
+<div class="rounded-2xl bg-[#1F2937]/60 border border-white/10 shadow-lg p-5">
 
   <!-- Search + Filters Row -->
-  <div class="row mb-4">
-    <div class="col-12">
-      <div class="input-group">
+  <div class="mb-4 w-full">
+    <div class="flex flex-col md:flex-row items-center gap-3">
 
-        <!-- Search icon -->
-        <span class="input-group-text">
-          <i class="fas fa-search"></i>
-        </span>
+      <!-- Search input with icon -->
+      <div class="flex items-center flex-1 bg-[#0F172A] border border-white/10 rounded-lg py-2 px-3">
+        <i class="fas fa-search text-[#F0F9FF]/70 mr-3"></i>
+        <input
+          id="hospital-search-input"
+          type="text"
+          class="bg-transparent outline-none w-full text-[#F0F9FF]"
+          placeholder="Search hospitals by name, address, or network..."
+          [(ngModel)]="searchHospital"
+          (input)="searchHospitals()"
+        />
+      </div>
 
-        <!-- Search input fills remaining width -->
-        <input type="text" 
-               class="form-control" 
-               placeholder="Search hospitals by name, address, or network..."
-               [(ngModel)]="searchHospital" 
-               (input)="searchHospitals()">
+      <!-- Buttons -->
+      <div class="flex flex-wrap gap-2">
 
-        <!-- Filter Buttons with margin for spacing -->
-        <button class="btn btn-outline-primary ms-2" 
-                [ngClass]="networkButtonClass" 
-                (click)="filterNetworkHospitals()">
+        <button
+          id="network-filter-btn"
+          (click)="filterNetworkHospitals()"
+          [ngClass]="networkButtonClass"
+          class="px-3 py-1 rounded-md text-sm font-medium transition border border-white/10"
+        >
           Network Only
         </button>
 
-        <button class="btn btn-outline-secondary ms-2" 
-                [ngClass]="ratingButtonClass" 
-                (click)="onRatingButtonPressed()">
+        <button
+          id="rating-filter-btn"
+          (click)="onRatingButtonPressed()"
+          [ngClass]="ratingButtonClass"
+          class="px-3 py-1 rounded-md text-sm font-medium transition border border-white/10"
+        >
           Rating
         </button>
 
-        <button class="btn btn-outline-dark ms-2" (click)="onAscendingButtonPressed()">
+        <button
+          id="asc-btn"
+          (click)="onAscendingButtonPressed()"
+          class="px-3 py-1 rounded-md bg-[#111827] border border-white/10 text-[#F0F9FF] hover:bg-[#111827]/80"
+          title="Sort Ascending"
+        >
           <i class="fas fa-sort-up"></i>
         </button>
 
-        <button class="btn btn-outline-dark ms-2" (click)="onDescendingButtonPressed()">
+        <button
+          id="desc-btn"
+          (click)="onDescendingButtonPressed()"
+          class="px-3 py-1 rounded-md bg-[#111827] border border-white/10 text-[#F0F9FF] hover:bg-[#111827]/80"
+          title="Sort Descending"
+        >
           <i class="fas fa-sort-down"></i>
         </button>
+
       </div>
     </div>
   </div>
 
   <!-- Hospital Table -->
-  <div class="overflow-x-auto">
-    <table class="table table-bordered table-hover table-striped align-middle">
-      <thead class="table-dark">
+  <div class="overflow-x-auto rounded-xl border border-white/10">
+    <table id="hospital-table" class="min-w-full text-sm text-[#F0F9FF]/90">
+      <thead class="bg-[#111827] text-[#F0F9FF]">
         <tr>
-          <th scope="col">S.No</th>
-          <th scope="col">Hospital Name</th>
-          <th scope="col">Phone No.</th>
-          <th scope="col">Email Id</th>
-          <th scope="col">Address</th>
-          <th scope="col">Rating</th>
-          <th scope="col">Network</th>
+          <th class="p-3 text-left">S.No</th>
+          <th class="p-3 text-left">Hospital Name</th>
+          <th class="p-3 text-left">Phone No.</th>
+          <th class="p-3 text-left">Email Id</th>
+          <th class="p-3 text-left">Address</th>
+          <th class="p-3 text-center">Rating</th>
+          <th class="p-3 text-center">Network</th>
         </tr>
       </thead>
-      <tbody>
+
+      <tbody class="divide-y divide-white/6">
         @for(item of filteredHospitalList; track $index){
-        <tr>
-          <td>{{$index+1}}</td>
-          <td>{{item.name}}</td>
-          <td>{{item.clientContactNumber}}</td>
-          <td>{{item.clientContactEmail}}</td>
-          <td>{{item.address}}</td>
+          <tr class="hover:bg-[#2563EB]/6 transition">
+            <td class="p-3 align-middle">{{ $index + 1 }}</td>
 
-          <!-- Rating centered, pill style -->
-          <td class="text-center">
-            <span 
-              class="px-2 py-1 rounded"
-              [ngClass]="{
-                'bg-danger text-white fw-semibold': item.rating < 2,
-                'bg-warning text-white fw-semibold': item.rating >= 2 && item.rating < 4,
-                'bg-success text-white fw-semibold': item.rating >= 4
-              }">
-              {{ item.rating | number:'1.1-1' }}
-            </span>
-          </td>
+            <td class="p-3 align-middle">
+              {{ item.name }}
+            </td>
 
-          <!-- Network tick/cross -->
-          <td class="text-center">
-            @if (item.network == 1) {
-              <span class="text-success fw-bold">✔</span>
-            }
-            @else if (item.network == 0) {
-              <span class="text-danger fw-bold">✖</span>
-            }
-          </td>
-        </tr>
+            <td class="p-3 align-middle">
+              {{ item.clientContactNumber }}
+            </td>
+
+            <td class="p-3 align-middle">
+              {{ item.clientContactEmail }}
+            </td>
+
+            <td class="p-3 align-middle max-w-[320px] truncate">
+              {{ item.address }}
+            </td>
+
+            <!-- Rating -->
+            <td class="p-3 text-center align-middle">
+              <span
+                class="inline-block px-3 py-1 rounded-md text-xs font-semibold"
+                [ngClass]="{
+                  'bg-red-600 text-white': item.rating < 2,
+                  'bg-yellow-500 text-black': item.rating >= 2 && item.rating < 4,
+                  'bg-green-600 text-white': item.rating >= 4
+                }"
+              >
+                {{ item.rating | number:'1.1-1' }}
+              </span>
+            </td>
+
+            <!-- Network -->
+            <td class="p-3 text-center align-middle">
+              @if (item.network == 1) {
+                <span class="text-green-400 font-bold">✔</span>
+              }
+              @else if (item.network == 0) {
+                <span class="text-red-400 font-bold">✖</span>
+              }
+            </td>
+          </tr>
+        }
+        @if (filteredHospitalList && filteredHospitalList.length === 0) {
+          <tr>
+            <td colspan="7" class="p-6 text-center text-[#F0F9FF]/60">
+              No hospitals found
+            </td>
+          </tr>
         }
       </tbody>
     </table>

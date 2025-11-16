@@ -1,49 +1,110 @@
-<div id="ia-new-claim-card" class="card p-4 shadow-sm ia-card">
+<!-- FULL PAGE WRAPPER -->
+<div class="w-full min-h-screen flex justify-center items-start pt-6">
 
-  <h5 id="ia-new-claim-title" class="ia-title">Create a New Claim</h5>
-  <p id="ia-new-claim-subtitle" class="ia-subtitle">Fill the form below</p>
+  <!-- New Claim Card (Centered) -->
+  <div id="ia-new-claim-card"
+       class="rounded-2xl bg-[#1F2937]/60 border border-white/10 shadow-xl p-8 w-full max-w-3xl">
 
-  <form id="ia-new-claim-form" [formGroup]="newClaimForm" (ngSubmit)="onCreateClaim()">
+    <h5 id="ia-new-claim-title" class="text-2xl font-semibold text-[#F0F9FF]">
+      Create a New Claim
+    </h5>
 
-    <!-- Claim Type -->
-    <div id="ia-claim-type-wrapper" class="mb-3 ia-field">
-      <label for="claimType" id="ia-claim-type-label" class="form-label ia-label">Claim Type</label>
-      <select id="claimType"
-              formControlName="claimType"
-              class="form-select ia-input-select">
-        <option value="" disabled selected>Select claim type</option>
-        <option value="1">Pre-Authorization (Cashless)</option>
-        <option value="2">Post-Authorization (Reimbursement)</option>
-      </select>
-    </div>
+    <p id="ia-new-claim-subtitle" class="text-sm text-[#F0F9FF]/70 mb-6">
+      Fill the form below
+    </p>
 
-    <div class="mb-3">
-      <label for="procedureNotes" class="form-label">Procedure details (Atleast 10 charachters)</label>
-      <textarea class="form-control" formControlName="procedureNotes" id="procedureNotes" placeholder="Enter the procedure details" rows="3" minlength="10"></textarea>
-    </div>
+    <form id="ia-new-claim-form" [formGroup]="newClaimForm" (ngSubmit)="onCreateClaim()">
 
-    <!-- Claim Amount (conditional) -->
-    @if (newClaimForm.get('claimType')?.value === '2') {
-    <div class="mb-3">
-        <label for="claimAmount" class="form-label">Claim Amount (₹)</label>
-        <input type="number" formControlName="claimAmount" class="form-control" id="claimAmount" placeholder="Enter the amount to claim" min="500">
-    </div>
-    }
+      <!-- Claim Type -->
+      <div id="ia-claim-type-wrapper" class="mb-4">
+        <label for="claimType" id="ia-claim-type-label"
+               class="block text-sm font-medium text-[#F0F9FF]/90 mb-2">
+          Claim Type
+        </label>
 
-    <!-- Document Upload -->
-    <div id="ia-document-upload-wrapper" class="mb-3 ia-field">
-      <label for="documentUpload" id="ia-document-upload-label" class="form-label ia-label">Upload Documents</label>
-      <input id="documentUpload"
-             type="file"
-             (change)="onDocumentUpload($event)"
-             class="form-control ia-input-file"
-             multiple>
-    </div>
-    <button type="submit" class="btn btn-primary w-100" [disabled]="!newClaimForm.valid || isClaimAmountExceedsPremium() || !file">Submit Claim</button>
-        @if(isClaimAmountExceedsPremium()){
-            <div class="text-danger">
-                Claim amount cannot exceed your remaining coverage.
-            </div>
-        }
-  </form>
+        <select id="claimType"
+                formControlName="claimType"
+                class="w-full rounded-lg bg-[#111827] border border-white/10 text-[#F0F9FF]
+                       py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#2563EB]/40">
+          <option value="" disabled selected class="text-[#F0F9FF]/40">Select claim type</option>
+          <option value="1">Pre-Authorization (Cashless)</option>
+          <option value="2">Post-Authorization (Reimbursement)</option>
+        </select>
+      </div>
+
+      <!-- Procedure Notes -->
+      <div class="mb-4">
+        <label for="procedureNotes"
+               class="block text-sm font-medium text-[#F0F9FF]/90 mb-2">
+          Procedure details (At least 10 characters)
+        </label>
+
+        <textarea id="procedureNotes"
+                  formControlName="procedureNotes"
+                  rows="4"
+                  minlength="10"
+                  placeholder="Enter the procedure details"
+                  class="w-full rounded-lg bg-[#111827] border border-white/10
+                         text-[#F0F9FF] py-2 px-3 resize-none
+                         focus:outline-none focus:ring-2 focus:ring-[#2563EB]/40"></textarea>
+      </div>
+
+      <!-- Claim Amount (Only for Reimbursement) -->
+      @if (newClaimForm.get('claimType')?.value === '2') {
+        <div class="mb-4">
+          <label for="claimAmount"
+                 class="block text-sm font-medium text-[#F0F9FF]/90 mb-2">
+            Claim Amount (₹)
+          </label>
+
+          <input id="claimAmount"
+                 type="number"
+                 formControlName="claimAmount"
+                 min="500"
+                 placeholder="Enter the amount to claim"
+                 class="w-full rounded-lg bg-[#111827] border border-white/10 text-[#F0F9FF]
+                        py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#2563EB]/40" />
+        </div>
+      }
+
+      <!-- Document Upload -->
+      <div id="ia-document-upload-wrapper" class="mb-4">
+        <label for="documentUpload" id="ia-document-upload-label"
+               class="block text-sm font-medium text-[#F0F9FF]/90 mb-2">
+          Upload Documents
+        </label>
+
+        <input id="documentUpload"
+               type="file"
+               multiple
+               (change)="onDocumentUpload($event)"
+               class="block w-full text-sm text-[#F0F9FF]
+                      file:mr-4 file:py-2 file:px-4
+                      file:rounded-md file:border-0
+                      file:bg-[#2563EB] file:text-[#F0F9FF]
+                      file:font-semibold hover:file:bg-[#3B82F6]" />
+
+        <p class="text-xs text-[#F0F9FF]/50 mt-2">
+          Allowed: PDF, JPG, PNG
+        </p>
+      </div>
+
+      <!-- Error: claim amount > coverage -->
+      @if (isClaimAmountExceedsPremium()) {
+        <div class="mb-4 text-sm text-[#F0F9FF] bg-[#7F1D1D]/20 border border-[#7F1D1D]/40 rounded-md p-2">
+          Claim amount cannot exceed your remaining coverage.
+        </div>
+      }
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        class="mt-2 w-full rounded-lg py-2 px-4 bg-[#2563EB] hover:bg-[#3B82F6]
+               text-[#F0F9FF] font-semibold transition disabled:opacity-50"
+        [disabled]="!newClaimForm.valid || isClaimAmountExceedsPremium() || !file">
+        Submit Claim
+      </button>
+
+    </form>
+  </div>
 </div>

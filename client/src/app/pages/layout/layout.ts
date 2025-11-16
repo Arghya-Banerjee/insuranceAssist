@@ -10,6 +10,7 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 export class Layout {
   
   router = inject(Router);
+  currentYear = new Date().getFullYear();
 
   constructor() {
     if(!localStorage.getItem('token')){

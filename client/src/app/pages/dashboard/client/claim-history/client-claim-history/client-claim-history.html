@@ -1,120 +1,198 @@
-<div class="container mt-4 p-4 rounded-lg shadow-lg bg-white">
-  <!-- Title -->
-  <h3 class="text-xl font-semibold mb-4 text-gray-800">Claim History</h3>
+<!-- Outer Wrapper -->
+<div class="w-full max-w-[1400px] mx-auto mt-6 px-4">
 
-  <!-- Filters Row -->
-  <div class="mb-3 d-flex justify-content-between flex-wrap align-items-center gap-2">
+  <!-- Card -->
+  <div class="rounded-2xl bg-[#1F2937]/60 border border-white/10 shadow-xl p-6">
 
-    <!-- Status Filters -->
-    <div class="d-flex flex-wrap gap-2">
-      <button id="created-filter-btn" class="btn"
-              [ngClass]="activeStatusList.includes('CREATED') ? 'btn-primary text-white' : 'btn-outline-primary'"
-              (click)="filterByStatus('CREATED')">Created</button>
+    <!-- Title -->
+    <h3 class="text-2xl font-semibold text-[#F0F9FF] mb-4">
+      Claim History
+    </h3>
 
-      <button id="reviewed-filter-btn" class="btn"
-              [ngClass]="activeStatusList.includes('IN REVIEW') ? 'btn-warning text-white' : 'btn-outline-warning'"
-              (click)="filterByStatus('IN REVIEW')">In Review</button>
+    <!-- Filters Section -->
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
 
-      <button id="approved-filter-btn" class="btn"
-              [ngClass]="activeStatusList.includes('APPROVED') ? 'btn-success text-white' : 'btn-outline-success'"
-              (click)="filterByStatus('APPROVED')">Approved</button>
+      <!-- Status Filters -->
+      <div class="flex flex-wrap gap-2">
+        <button
+          id="created-filter-btn"
+          (click)="filterByStatus('CREATED')"
+          class="px-3 py-1 rounded-md text-sm font-medium transition border border-white/20"
+          [ngClass]="{
+            'bg-[#2563EB] text-[#F0F9FF]': activeStatusList.includes('CREATED'),
+            'text-[#F0F9FF]/70': !activeStatusList.includes('CREATED')
+          }"
+        >
+          Created
+        </button>
 
-      <button id="rejected-filter-btn" class="btn"
-              [ngClass]="activeStatusList.includes('REJECTED') ? 'btn-danger text-white' : 'btn-outline-danger'"
-              (click)="filterByStatus('REJECTED')">Rejected</button>
+        <button id="reviewed-filter-btn"
+                (click)="filterByStatus('IN REVIEW')"
+                class="px-3 py-1 rounded-md text-sm font-medium
+                       border border-yellow-600/50 text-yellow-400
+                       hover:bg-yellow-600/20 transition"
+                [class.bg-yellow-600]="activeStatusList.includes('IN REVIEW')"
+                [class.text-black]="activeStatusList.includes('IN REVIEW')">
+          In Review
+        </button>
+
+        <button id="approved-filter-btn"
+                (click)="filterByStatus('APPROVED')"
+                class="px-3 py-1 rounded-md text-sm font-medium
+                       border border-green-600/50 text-green-400
+                       hover:bg-green-600/20 transition"
+                [class.bg-green-600]="activeStatusList.includes('APPROVED')"
+                [class.text-black]="activeStatusList.includes('APPROVED')">
+          Approved
+        </button>
+
+        <button id="rejected-filter-btn"
+                (click)="filterByStatus('REJECTED')"
+                class="px-3 py-1 rounded-md text-sm font-medium
+                       border border-red-600/50 text-red-400
+                       hover:bg-red-600/20 transition"
+                [class.bg-red-600]="activeStatusList.includes('REJECTED')"
+                [class.text-black]="activeStatusList.includes('REJECTED')">
+          Rejected
+        </button>
+      </div>
+
+      <!-- Claim Type Filters -->
+      <div class="flex flex-wrap gap-2">
+        <button id="pre-filter-btn"
+                (click)="filterByType('PRE')"
+                class="px-3 py-1 rounded-md text-sm font-medium
+                       border border-yellow-500/50 text-yellow-300"
+                [class.bg-yellow-500]="activeTypeList.includes('PRE')"
+                [class.text-black]="activeTypeList.includes('PRE')">
+          PRE
+        </button>
+
+        <button id="post-filter-btn"
+                (click)="filterByType('POST')"
+                class="px-3 py-1 rounded-md text-sm font-medium
+                       border border-cyan-500/50 text-cyan-300"
+                [class.bg-cyan-500]="activeTypeList.includes('POST')"
+                [class.text-black]="activeTypeList.includes('POST')">
+          POST
+        </button>
+      </div>
+
+      <!-- Date Filters -->
+      <div class="flex items-center gap-2">
+        <label class="text-[#F0F9FF]/80 text-sm font-medium">From:</label>
+        <input id="start-date" type="date"
+               [(ngModel)]="filterStartDate"
+               (change)="applyFilters()"
+               [attr.max]="today"
+               class="rounded-md bg-[#111827] border border-white/20 text-[#F0F9FF] px-2 py-1 text-sm" />
+
+        <label class="text-[#F0F9FF]/80 text-sm font-medium">To:</label>
+        <input id="end-date" type="date"
+               [(ngModel)]="filterEndDate"
+               (change)="applyFilters()"
+               [attr.max]="today"
+               [attr.min]="filterStartDate"
+               [disabled]="!filterStartDate"
+               class="rounded-md bg-[#111827] border border-white/20 text-[#F0F9FF] px-2 py-1 text-sm" />
+      </div>
+
+      <!-- Clear Filters -->
+      <button id="clear-filter-btn"
+              (click)="resetFilters()"
+              title="Clear Filters"
+              class="text-red-400 hover:text-red-300 text-xl font-bold">
+        ✖
+      </button>
     </div>
 
-    <!-- Claim Type Filters -->
-    <div class="d-flex flex-wrap gap-2">
-      <button id="pre-filter-btn" class="btn" 
-              [ngClass]="activeTypeList.includes('PRE') ? 'btn-warning text-dark' : 'btn-outline-warning'" 
-              (click)="filterByType('PRE')">PRE</button>
-      <button id="post-filter-btn" class="btn" 
-              [ngClass]="activeTypeList.includes('POST') ? 'btn-info text-dark' : 'btn-outline-info'" 
-              (click)="filterByType('POST')">POST</button>
+    <!-- Search -->
+    <div class="mb-4">
+      <input id="search-filter"
+             type="text"
+             [(ngModel)]="filterSearchTerm"
+             (input)="applyFilters()"
+             placeholder="Search claims..."
+             class="w-full rounded-lg bg-[#111827] border border-white/20 text-[#F0F9FF]
+                    py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#2563EB]/40" />
     </div>
 
-    <!-- Date Range Filter -->
-    <div class="d-flex align-items-center gap-2">
-    <label class="fw-semibold">From:</label>
-    <input id="start-date" type="date" [(ngModel)]="filterStartDate" (change)="applyFilters()" 
-            class="form-control form-control-sm" style="width:auto;"
-            [attr.max]="today">
-    <label class="fw-semibold">To:</label>
-    <input id="end-date" type="date" [(ngModel)]="filterEndDate" (change)="applyFilters()" 
-            class="form-control form-control-sm" style="width:auto;" 
-            [attr.max]="today" [attr.min]="filterStartDate" [disabled]="!filterStartDate">
-    </div>
+    <!-- Table / Results -->
+    @if (!result) {
+      <div class="rounded-lg bg-blue-900/20 border border-blue-600/20 text-blue-200 p-3">
+        No claims loaded yet.
+      </div>
+    }
+    @else {
+      <div class="overflow-x-auto rounded-xl border border-white/10">
+        <table id="claim-history-table" class="min-w-full text-left text-sm text-[#F0F9FF]/90">
 
-    <!-- Clear Filters -->
-    <div>
-      <button id="clear-filter-btn" class="btn btn-sm btn-outline-danger" (click)="resetFilters()" title="Clear Filters">✖</button>
-    </div>
-  </div>
+          <!-- Header -->
+          <thead id="claim-history-table-header"
+                 class="bg-[#111827] text-[#F0F9FF]">
+            <tr>
+              <th class="p-3">Open Date</th>
+              <th class="p-3">Procedure Notes</th>
+              <th class="p-3 text-center">Claim Type</th>
+              <th class="p-3 text-center">Status</th>
+              <th class="p-3">Claim Amount</th>
+            </tr>
+          </thead>
 
-  <!-- Search Bar -->
-  <div class="mb-3">
-    <input id="search-filter" type="text"
-           [(ngModel)]="filterSearchTerm"
-           placeholder="Search claims..."
-           class="form-control"
-           (input)="applyFilters()">
-  </div>
+          <!-- Body -->
+          <tbody id="claim-history-table-body" class="divide-y divide-white/10">
 
-  <!-- Table -->
-  @if (!result) {
-    <div class="alert alert-info rounded shadow-sm">
-      No claims loaded yet.
-    </div>
-  }
-  @else {
-    <div class="overflow-x-auto">
-      <table id="claim-history-table" class="table table-bordered table-hover table-striped align-middle">
-        <thead id="claim-history-table-header" class="table-dark">
-          <tr>
-            <th scope="col">Open Date</th>
-            <th scope="col">Procedure Notes</th>
-            <th class="text-center" scope="col">Claim Type</th>
-            <th class="text-center" scope="col">Status</th>
-            <th scope="col">Claim Amount</th>
-          </tr>
-        </thead>
-        <tbody id="claim-history-table-body">
-          @if(result.length === 0){
+            @if (result.length === 0) {
               <tr>
-              <td colspan="5" class="text-center text-muted">
+                <td colspan="5"
+                    class="text-center py-4 text-[#F0F9FF]/50">
                   No claims found
-              </td>
+                </td>
               </tr>
-          }
-          @for(claim of result; track $index){
-              <tr>
-              <td>{{claim.openDate | date:'dd MMMM yyyy'}}</td>
-              <td>{{claim.procedureNotes}}</td>
-              <td class="text-center">
-                  <span class="badge"
-                  [ngClass]="{
-                      'bg-warning': claim.claimType === 'PRE',
-                      'bg-info': claim.claimType === 'POST'
-                  }">
-                  {{ claim.claimType }}
+            }
+
+            @for (claim of result; track $index) {
+              <tr class="hover:bg-[#2563EB]/10 transition">
+
+                <td class="p-3">
+                  {{ claim.openDate | date:'dd MMMM yyyy' }}
+                </td>
+
+                <td class="p-3">
+                  {{ claim.procedureNotes }}
+                </td>
+
+                <td class="p-3 text-center">
+                  <span class="px-3 py-1 rounded-md text-xs font-semibold"
+                        [ngClass]="{
+                          'bg-yellow-600 text-black': claim.claimType === 'PRE',
+                          'bg-cyan-500 text-black': claim.claimType === 'POST'
+                        }">
+                    {{ claim.claimType }}
                   </span>
-              </td>
-              <td class="text-center">
-                  <span class="badge" [ngClass]="{
-                  'bg-success': claim.status === 'APPROVED',
-                  'bg-primary': claim.status === 'CREATED',
-                  'bg-danger': claim.status === 'REJECTED',
-                  'bg-warning': claim.status === 'IN REVIEW'
-                  }">
-                  {{claim.status}}
+                </td>
+
+                <td class="p-3 text-center">
+                  <span class="px-3 py-1 rounded-md text-xs font-semibold"
+                        [ngClass]="{
+                          'bg-green-600 text-black': claim.status === 'APPROVED',
+                          'bg-blue-600 text-white': claim.status === 'CREATED',
+                          'bg-red-600 text-black': claim.status === 'REJECTED',
+                          'bg-yellow-500 text-black': claim.status === 'IN REVIEW'
+                        }">
+                    {{ claim.status }}
                   </span>
-              </td>
-              <td>Rs.{{claim.claimAmount}}</td>
+                </td>
+
+                <td class="p-3">
+                  ₹{{ claim.claimAmount }}
+                </td>
+
               </tr>
-          }
-      </tbody>
-      </table>
-    </div>
-  }
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
 </div>

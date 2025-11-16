@@ -1,39 +1,79 @@
-<header id="ia-client-header" class="ia-header">
-  <title>Insurance Assist - Client Dashboard</title>
-</header>
+<!-- TAB NAV -->
+<nav class="w-full border-b border-white/10 bg-[#1F2937]/80 backdrop-blur">
+  <ul
+    id="ia-client-tabs"
+    class="flex justify-center items-center gap-4 w-full overflow-x-auto py-3 px-6"
+  >
+    <li id="ia-tab-overview">
+      <button
+        id="ia-tab-overview-link"
+        (click)="setTab('overview')"
+        class="px-4 py-2 text-sm rounded-lg transition font-medium
+                text-[#F0F9FF]/70 hover:text-[#F0F9FF]
+                hover:bg-[#2563EB]/20"
+        [class.bg-[#2563EB]]="activeTab === 'overview'"
+        [class.text-[#F0F9FF]]="activeTab === 'overview'"
+      >
+        Overview
+      </button>
+    </li>
 
-<ul id="ia-client-tabs" class="nav nav-tabs mb-4 ia-tabs">
-  <li id="ia-tab-overview" class="nav-item ia-tab-item">
-    <a id="ia-tab-overview-link"
-       class="nav-link ia-tab-link"
-       [class.active]="activeTab === 'overview'"
-       style="cursor:pointer"
-       (click)="setTab('overview')">Overview</a>
-  </li>
-  <li id="ia-tab-new-claim" class="nav-item ia-tab-item">
-    <a id="ia-tab-new-claim-link"
-       class="nav-link ia-tab-link"
-       [class.active]="activeTab === 'new-claim'"
-       style="cursor:pointer"
-       (click)="setTab('new-claim')">New Claim</a>
-  </li>
-  <li id="ia-tab-history" class="nav-item ia-tab-item">
-    <a id="ia-tab-history-link"
-       class="nav-link ia-tab-link"
-       [class.active]="activeTab === 'history'"
-       style="cursor:pointer"
-       (click)="setTab('history')">Claim History</a>
-  </li>
-  <li id="ia-tab-hospitals" class="nav-item ia-tab-item">
-    <a id="ia-tab-hospitals-link"
-       class="nav-link ia-tab-link"
-       [class.active]="activeTab === 'hospitals'"
-       style="cursor:pointer"
-       (click)="setTab('hospitals')">Network Hospitals</a>
-  </li>
-</ul>
+    <li id="ia-tab-new-claim">
+      <button
+        id="ia-tab-new-claim-link"
+        (click)="setTab('new-claim')"
+        class="px-4 py-2 text-sm rounded-lg transition font-medium
+                text-[#F0F9FF]/70 hover:text-[#F0F9FF]
+                hover:bg-[#2563EB]/20"
+        [class.bg-[#2563EB]]="activeTab === 'new-claim'"
+        [class.text-[#F0F9FF]]="activeTab === 'new-claim'"
+      >
+        New Claim
+      </button>
+    </li>
 
-@if (activeTab === 'overview') {<app-client-overview id="ia-pane-overview" class="ia-tab-pane"></app-client-overview>}
-@else if (activeTab === 'new-claim') {<app-client-new-claim id="ia-pane-new-claim" class="ia-tab-pane"></app-client-new-claim>}
-@else if (activeTab === 'hospitals') {<app-network-hospitals id="ia-pane-hospitals" class="ia-tab-pane"></app-network-hospitals>}
-@else if (activeTab === 'history') {<app-client-claim-history id="ia-pane-history" class="ia-tab-pane"></app-client-claim-history>}
+    <li id="ia-tab-history">
+      <button
+        id="ia-tab-history-link"
+        (click)="setTab('history')"
+        class="px-4 py-2 text-sm rounded-lg transition font-medium
+                text-[#F0F9FF]/70 hover:text-[#F0F9FF]
+                hover:bg-[#2563EB]/20"
+        [class.bg-[#2563EB]]="activeTab === 'history'"
+        [class.text-[#F0F9FF]]="activeTab === 'history'"
+      >
+        Claim History
+      </button>
+    </li>
+
+    <li id="ia-tab-hospitals">
+      <button
+        id="ia-tab-hospitals-link"
+        (click)="setTab('hospitals')"
+        class="px-4 py-2 text-sm rounded-lg transition font-medium
+                text-[#F0F9FF]/70 hover:text-[#F0F9FF]
+                hover:bg-[#2563EB]/20"
+        [class.bg-[#2563EB]]="activeTab === 'hospitals'"
+        [class.text-[#F0F9FF]]="activeTab === 'hospitals'"
+      >
+        Network Hospitals
+      </button>
+    </li>
+  </ul>
+</nav>
+
+<!-- CONTENT -->
+<div class="w-full px-6 py-6">
+  @if (activeTab === 'overview') {
+    <app-client-overview id="ia-pane-overview"></app-client-overview>
+  }
+  @else if (activeTab === 'new-claim') {
+    <app-client-new-claim id="ia-pane-new-claim"></app-client-new-claim>
+  }
+  @else if (activeTab === 'hospitals') {
+    <app-network-hospitals id="ia-pane-hospitals"></app-network-hospitals>
+  }
+  @else if (activeTab === 'history') {
+    <app-client-claim-history id="ia-pane-history"></app-client-claim-history>
+  }
+</div>
